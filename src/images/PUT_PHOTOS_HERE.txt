@@ -1,0 +1,4 @@
+Put your gallery photos in this folder (src/images/).
+Supported: jpg, jpeg, png, webp, avif, gif.
+They appear in the Spatial gallery automatically (restart `npm run dev` if it is already running and a new file is not picked up).
+Tip: resize big photos to ~1600px wide (or convert to WebP) so the page loads fast.

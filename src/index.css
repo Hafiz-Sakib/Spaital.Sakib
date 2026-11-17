@@ -1,0 +1,46 @@
+@import "tailwindcss";
+/* Tailwind must see the classes inside the Motion Brew components */
+@source "../node_modules/motion-brew/dist";
+
+/* `dark:` follows the "dark" class on <html> (set by src/theme.js), not the OS setting. Day is the default. */
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+  --font-sans: "Figtree Variable", "Figtree", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Bricolage Grotesque Variable", "Bricolage Grotesque", ui-sans-serif, sans-serif;
+  --color-ink: rgb(var(--ink));
+  --color-mist: rgb(var(--mist));
+  --color-surface: rgb(var(--surface));
+}
+
+/* Day / night tokens (same palette as the portfolio) */
+:root { color-scheme: light; --ink: 20 21 26; --mist: 243 244 247; --surface: 255 255 255; }
+:root.dark { color-scheme: dark; --ink: 232 233 244; --mist: 14 15 26; --surface: 22 24 40; }
+
+html { scroll-behavior: smooth; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+html, body { overflow-x: clip; }
+body { background: rgb(var(--mist)); color: rgb(var(--ink)); -webkit-font-smoothing: antialiased; }
+h1, h2, h3 { font-family: var(--font-display); letter-spacing: -0.02em; }
+:focus-visible { outline: 2px solid rgb(var(--ink)); outline-offset: 3px; border-radius: 12px; }
+::selection { background: rgb(124 108 246 / .3); }
+
+/* A quiet glow behind the page at night */
+:root.dark body::before {
+  content: ""; position: fixed; inset: 0; z-index: -1; pointer-events: none;
+  background:
+    radial-gradient(60rem 38rem at 12% -8%, rgba(124,108,246,.16), transparent 60%),
+    radial-gradient(48rem 32rem at 100% 105%, rgba(56,189,248,.08), transparent 60%);
+}
+
+/* Day / night switch: the new theme is revealed by an expanding circle (clip-path set in theme.js) */
+::view-transition-old(root), ::view-transition-new(root) { animation: none; mix-blend-mode: normal; }
+::view-transition-old(root) { z-index: 1; }
+::view-transition-new(root) { z-index: 2; }
+/* Fallback for browsers without View Transitions: colours ease instead */
+.theme-fade, .theme-fade *, .theme-fade *::before, .theme-fade *::after {
+  transition: background-color .45s ease, color .45s ease, border-color .45s ease, fill .45s ease, stroke .45s ease, box-shadow .45s ease !important;
+}
+
+/* Frosted glass used by the floating bar, dock and About panel */
+.glass { background: rgb(var(--surface) / .72); backdrop-filter: blur(18px) saturate(1.5); -webkit-backdrop-filter: blur(18px) saturate(1.5); box-shadow: 0 0 0 1px rgb(var(--ink) / .08), 0 18px 50px -22px rgb(0 0 0 / .4); }

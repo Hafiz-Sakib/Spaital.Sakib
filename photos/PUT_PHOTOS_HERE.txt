@@ -1,0 +1,5 @@
+PUT ALL YOUR PHOTOS IN THIS FOLDER (photos/).
+
+Just run:  npm run dev      (keep it running)
+Photos here are converted and renamed 1, 2, 3 ... by date automatically, also the ones you add LATER while it runs.
+Your untouched originals are moved to ../originals/ afterwards (backup). This folder stays empty.
