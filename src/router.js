@@ -3,6 +3,7 @@ import { useSyncExternalStore } from "react";
 /* Tiny hash router: "#/skills" -> "skills". No extra dependency and no server rewrites needed on Vercel.
    The landing page (the photo tunnel) is "home" and stays at "/" (or "#/" / "#top"). */
 export const PAGES = [
+  { id: "projects", label: "Projects" },
   { id: "skills", label: "Skills" },
   { id: "journey", label: "Journey" },
   { id: "coding", label: "Coding" },
@@ -15,6 +16,6 @@ const read = () => {
 };
 const subscribe = (cb) => { window.addEventListener("hashchange", cb); return () => window.removeEventListener("hashchange", cb); };
 
-/** const route = useRoute(); -> "home" | "skills" | "journey" | "coding" | "contact" */
+/** const route = useRoute(); -> "home" | "projects" | "skills" | "journey" | "coding" | "contact" */
 export const useRoute = () => useSyncExternalStore(subscribe, read, () => "home");
 export const href = (id) => (id === "home" ? "#/" : `#/${id}`);

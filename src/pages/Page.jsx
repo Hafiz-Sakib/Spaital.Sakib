@@ -32,7 +32,7 @@ export default function Page({ id, eyebrow, title, sub, children }) {
   const i = PAGES.findIndex((p) => p.id === id);
   const next = PAGES[(i + 1) % PAGES.length];
   return (
-    <motion.main initial={{ opacity: 0, y: 14 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }} className="mx-auto max-w-5xl px-4 pb-24 pt-28 sm:px-6 sm:pt-32">
+    <motion.main initial={{ opacity: 0, y: 14 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }} className="mx-auto max-w-5xl px-4 pb-32 pt-28 sm:px-6 sm:pt-32 lg:pb-24 lg:pr-24">
       <header className="mb-10 sm:mb-14">
         <p className="mb-3 inline-block rounded-full bg-ink/10 px-3 py-1 text-xs font-semibold tracking-wide text-ink/70">{eyebrow}</p>
         <h1 className="font-display text-4xl font-semibold leading-[1] sm:text-6xl">{title}<span className="bg-gradient-to-r from-violet-500 to-pink-500 bg-clip-text text-transparent">.</span></h1>

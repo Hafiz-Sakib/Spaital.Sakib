@@ -1,8 +1,10 @@
-// Project screenshots from the portfolio (public/work/). Edit or delete freely.
+// Projects page data (screenshots live in public/work/). Same info as the motion-brew portfolio. c = chip colour, tags = tech stack.
 export const stats = [{"v":647,"s":"","l":"Codeforces problems"},{"v":1574,"s":"","l":"LeetCode rating"},{"v":10,"s":"","l":"Projects shipped"},{"v":4,"s":"+","l":"Years building"}];
 export const work = [
  {
   "img": "cp-pathshala",
+  "c": "lilac",
+  "tags": ["React", "Vite", "PWA", "Python", "C++"],
   "title": "CP Pathshala",
   "kind": "Education PWA",
   "desc": "Offline-first app teaching C++ competitive programming in Bangla: 144 lessons, 200 runnable examples and interactive widgets.",
@@ -13,6 +15,8 @@ export const work = [
  },
  {
   "img": "algoviz",
+  "c": "mint",
+  "tags": ["React 19", "TypeScript", "Three.js", "Framer Motion"],
   "title": "AlgoViz",
   "kind": "Algorithm visualizer",
   "desc": "60+ algorithms with frame-by-frame playback and a live C++ code panel with line highlighting, plus a Three.js hero scene.",
@@ -23,6 +27,8 @@ export const work = [
  },
  {
   "img": "nova",
+  "c": "sky",
+  "tags": ["React", "Three.js", "R3F", "Math.js"],
   "title": "NOVA MathPlot",
   "kind": "Scientific visualization",
   "desc": "Browser-based 2D/3D plotting with 60+ surface presets, parametric curves and a neural activation function explorer.",
@@ -33,6 +39,8 @@ export const work = [
  },
  {
   "img": "subcalc",
+  "c": "peach",
+  "tags": ["React", "Tailwind", "VLSM"],
   "title": "SubCalc Pro",
   "kind": "Networking tool",
   "desc": "IPv4 subnetting toolkit with FLSM and VLSM breakdowns, overlap detection and a visual subnet tree.",
@@ -43,6 +51,8 @@ export const work = [
  },
  {
   "img": "fifa",
+  "c": "lemon",
+  "tags": ["React", "Tailwind", "React Router"],
   "title": "FIFA World Cup 2026",
   "kind": "Sports tracker",
   "desc": "Fixture tracker in Bangladesh time with predictors, squads, a 20-question quiz and PDF fixture download.",
@@ -53,6 +63,8 @@ export const work = [
  },
  {
   "img": "bpdb",
+  "c": "mint",
+  "tags": ["React", "Framer Motion", "Bengali"],
   "title": "BPDB Token Helper",
   "kind": "Utility, Bengali UI",
   "desc": "Parses prepaid electricity token SMS and guides 20-digit token entry step by step, built for low-light phone use.",
@@ -63,6 +75,8 @@ export const work = [
  },
  {
   "img": "sababa",
+  "c": "sky",
+  "tags": ["React", "Firebase", "Tailwind"],
   "title": "Sababa Tours",
   "kind": "Travel platform",
   "desc": "Luxury travel site for Bangladesh with filtered packages, Firebase auth and a booking flow.",
@@ -73,6 +87,8 @@ export const work = [
  },
  {
   "img": "bagsq",
+  "c": "peach",
+  "tags": ["Next.js", "MySQL", "Express", "Stripe"],
   "title": "BagsQ",
   "kind": "SaaS dashboard",
   "desc": "Workshop workflow system: customer intake, job cards, service reminders and technician stats.",
@@ -83,6 +99,8 @@ export const work = [
  },
  {
   "img": "odyssey",
+  "c": "lilac",
+  "tags": ["Next.js", "MySQL", "Stripe"],
   "title": "Odyssey Travel Agency",
   "kind": "Full-stack web app",
   "desc": "Travel packages with add-ons, Stripe checkout, booking history and an admin dashboard.",
@@ -93,6 +111,8 @@ export const work = [
  },
  {
   "img": "blood",
+  "c": "lemon",
+  "tags": ["Next.js", "MySQL", "JWT"],
   "title": "Blood Donation Management",
   "kind": "Community platform",
   "desc": "Connects donors and recipients by blood group and location, with JWT auth and a live request board.",

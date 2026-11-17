@@ -1,13 +1,26 @@
-import { useRef, useState } from "react";
-import { LayoutGroup, motion, useScroll, useSpring } from "framer-motion";
+import { useRef } from "react";
+import { motion, useScroll, useSpring } from "framer-motion";
+import { FaArrowUpRightFromSquare, FaAward, FaBriefcase, FaGraduationCap } from "react-icons/fa6";
 import { certs, edu, jobs } from "../about";
-import Page, { Reveal } from "./Page";
+import Page, { BG, Reveal } from "./Page";
 
-const TABS = [
-  ["Education", edu, "sky"],
-  ["Experience", jobs, "peach"],
-  ["Certificates", certs, "lilac"],
-];
+const providerTint = { Coursera: "sky", Udemy: "lilac", HackerRank: "mint", "Programming Hero": "peach" };
+
+/* A heading for each block of the journey */
+function Block({ id, Icon, title, count, tint, children }) {
+  return (
+    <section id={id} className="mb-14 scroll-mt-28 last:mb-0 sm:mb-20">
+      <Reveal>
+        <div className="mb-6 flex items-center gap-3">
+          <span className={`grid h-11 w-11 shrink-0 place-items-center rounded-2xl ${BG[tint]}`}><Icon aria-hidden className="h-5 w-5" /></span>
+          <h2 className="font-display text-2xl font-semibold sm:text-3xl">{title}</h2>
+          <span className="rounded-full bg-ink/[.07] px-3 py-1 text-xs font-semibold text-ink/60">{count}</span>
+        </div>
+      </Reveal>
+      {children}
+    </section>
+  );
+}
 
 function Timeline({ items }) {
   const ref = useRef(null);
@@ -27,7 +40,6 @@ function Timeline({ items }) {
                 <h3 className="mt-3 text-lg font-bold leading-snug sm:text-xl">{it.t}</h3>
                 <p className="text-sm font-semibold text-ink/60">{it.o}</p>
                 {it.d && <p className="mt-2 text-sm leading-relaxed text-ink/70">{it.d}</p>}
-                {it.u && <a href={it.u} target="_blank" rel="noreferrer" className="mt-3 inline-block rounded-full bg-ink/10 px-4 py-1.5 text-xs font-semibold transition hover:bg-ink/15">View certificate ↗</a>}
               </motion.div>
             </Reveal>
           </li>
@@ -37,22 +49,34 @@ function Timeline({ items }) {
   );
 }
 
-export default function Journey() {
-  const [tab, setTab] = useState(0);
-  const [name, items] = TABS[tab];
+function CertGrid({ items }) {
   return (
-    <Page id="journey" eyebrow="Journey" title="Where I've been" sub="Studies, work and the courses along the way. Switch the tabs and scroll the line.">
-      <LayoutGroup>
-        <div role="tablist" className="mb-8 inline-flex rounded-full bg-ink/[.07] p-1">
-          {TABS.map(([t, list], i) => (
-            <button key={t} role="tab" aria-selected={tab === i} onClick={() => setTab(i)} className="relative rounded-full px-4 py-2 text-sm font-semibold sm:px-5">
-              {tab === i && <motion.span layoutId="journey-tab" className="absolute inset-0 rounded-full bg-ink" transition={{ type: "spring", stiffness: 420, damping: 34 }} />}
-              <span className={`relative ${tab === i ? "text-mist" : "text-ink/70"}`}>{t} <span className="opacity-60">{list.length}</span></span>
-            </button>
-          ))}
-        </div>
-      </LayoutGroup>
-      <Timeline key={name} items={items} />
+    <ul className="grid gap-3 sm:grid-cols-2">
+      {items.map((c, i) => (
+        <li key={c.t}>
+          <Reveal delay={(i % 2) * 0.06} className="h-full">
+            <a href={c.u} target="_blank" rel="noreferrer" className="card group flex h-full flex-col p-5 transition-transform hover:-translate-y-1">
+              <div className="flex items-center justify-between gap-3">
+                <span className={`rounded-full ${BG[providerTint[c.o]] || "bg-lemon"} px-3 py-1 text-xs font-semibold`}>{c.o}</span>
+                <span className="text-xs font-semibold tabular-nums text-ink/50">{c.p}</span>
+              </div>
+              <h3 className="mt-4 text-base font-bold leading-snug group-hover:underline sm:text-lg">{c.t}</h3>
+              {c.u && <span className="mt-4 inline-flex items-center gap-2 text-xs font-semibold text-ink/60 transition-colors group-hover:text-ink">View certificate <FaArrowUpRightFromSquare aria-hidden className="h-2.5 w-2.5" /></span>}
+            </a>
+          </Reveal>
+        </li>
+      ))}
+    </ul>
+  );
+}
+
+/* No tabs: three blocks one after another, scroll down through them. */
+export default function Journey() {
+  return (
+    <Page id="journey" eyebrow="Journey" title="Where I've been" sub="Studies, certificates and work, one scroll from top to bottom.">
+      <Block id="education" Icon={FaGraduationCap} title="Education" count={edu.length} tint="sky"><Timeline items={edu} /></Block>
+      <Block id="certificates" Icon={FaAward} title="Certificates" count={certs.length} tint="lilac"><CertGrid items={certs} /></Block>
+      <Block id="experience" Icon={FaBriefcase} title="Experience" count={jobs.length} tint="peach"><Timeline items={jobs} /></Block>
     </Page>
   );
 }
