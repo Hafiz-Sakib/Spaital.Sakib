@@ -11,11 +11,16 @@
   --color-ink: rgb(var(--ink));
   --color-mist: rgb(var(--mist));
   --color-surface: rgb(var(--surface));
+  --color-lilac: rgb(var(--lilac));
+  --color-mint: rgb(var(--mint));
+  --color-peach: rgb(var(--peach));
+  --color-sky: rgb(var(--sky));
+  --color-lemon: rgb(var(--lemon));
 }
 
 /* Day / night tokens (same palette as the portfolio) */
-:root { color-scheme: light; --ink: 20 21 26; --mist: 243 244 247; --surface: 255 255 255; }
-:root.dark { color-scheme: dark; --ink: 232 233 244; --mist: 14 15 26; --surface: 22 24 40; }
+:root { color-scheme: light; --ink: 20 21 26; --mist: 243 244 247; --surface: 255 255 255; --lilac: 231 227 255; --mint: 218 243 228; --peach: 255 229 211; --sky: 217 236 255; --lemon: 255 243 196; }
+:root.dark { color-scheme: dark; --ink: 232 233 244; --mist: 14 15 26; --surface: 22 24 40; --lilac: 49 43 98; --mint: 21 62 49; --peach: 74 46 30; --sky: 24 59 92; --lemon: 68 59 22; }
 
 html { scroll-behavior: smooth; }
 @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
@@ -44,3 +49,6 @@ h1, h2, h3 { font-family: var(--font-display); letter-spacing: -0.02em; }
 
 /* Frosted glass used by the floating bar, dock and About panel */
 .glass { background: rgb(var(--surface) / .72); backdrop-filter: blur(18px) saturate(1.5); -webkit-backdrop-filter: blur(18px) saturate(1.5); box-shadow: 0 0 0 1px rgb(var(--ink) / .08), 0 18px 50px -22px rgb(0 0 0 / .4); }
+
+/* Cards on the extra pages */
+.card { background: rgb(var(--surface)); border-radius: 1.5rem; box-shadow: 0 0 0 1px rgb(var(--ink) / .07), 0 18px 44px -26px rgb(0 0 0 / .35); }

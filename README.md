@@ -47,6 +47,7 @@ Drop in photos, run one command, publish to Vercel for free.
 ## Features
 
 - **Spatial tunnel**: WebGL gallery from [Motion Brew](https://motion-brew.com) (three.js + GSAP, code-split and loaded only when the page opens).
+- **Extra pages**: besides the photo tunnel on the home page there are four interactive pages, **Skills**, **Journey**, **Coding** and **Contact**, reached from the top bar (`#/skills`, `#/journey`, `#/coding`, `#/contact`). They carry no project pictures. Edit their text in `src/about.js` and `src/site.js`.
 - **Random every visit**: a fresh random set of up to 64 photos (`MAX_PHOTOS` in `src/App.jsx`) in a fresh order.
 - **Automatic photo pipeline**: `npm run dev` converts every photo to WebP, auto-rotates it, strips GPS/EXIF, creates 3 sizes and numbers them oldest to newest.
 - **Efficient**: the browser only ever downloads WebP. The tunnel uses the 900 px version, a click opens the 1600 px version. The photo list is a tiny JSON file, so 500 photos cost about the same JS as 5.

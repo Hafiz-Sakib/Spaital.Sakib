@@ -5,6 +5,15 @@ import { site, stats } from "./site";
 import { Icon } from "./components/icons";
 import ThemeToggle from "./components/ThemeToggle";
 import InstallButton from "./components/InstallButton";
+import { NavBar, NavButton } from "./components/NavMenu";
+import { useRoute } from "./router";
+
+const PAGE = {
+  skills: lazy(() => import("./pages/Skills")),
+  journey: lazy(() => import("./pages/Journey")),
+  coding: lazy(() => import("./pages/Coding")),
+  contact: lazy(() => import("./pages/Contact")),
+};
 
 // three.js / gsap are only downloaded when the landing page opens.
 const SpatialGallery = lazy(() => import("motion-brew/spatial-gallery").then((m) => ({ default: m.SpatialGallery })));
@@ -15,19 +24,22 @@ const MAX_PHOTOS = 64;
 const shuffle = (list) => { const r = list.slice(); for (let i = r.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [r[i], r[j]] = [r[j], r[i]]; } return r; };
 
 export default function App() {
+  const route = useRoute();
   const [about, setAbout] = useState(false);
   const tunnel = useMemo(() => shuffle(images).slice(0, MAX_PHOTOS).map((i) => ({ src: i.src, alt: i.alt, href: i.full })), []); // src = 900px WebP texture, href = 1600px WebP opened on click
-  useEffect(() => { document.documentElement.style.overflow = "hidden"; return () => { document.documentElement.style.overflow = ""; }; }, []);
+  useEffect(() => { if (route !== "home") { window.scrollTo(0, 0); return; } document.documentElement.style.overflow = "hidden"; return () => { document.documentElement.style.overflow = ""; }; }, [route]); // the photo tunnel owns the scroll; the other pages scroll normally
   useEffect(() => { const k = (e) => e.key === "Escape" && setAbout(false); window.addEventListener("keydown", k); return () => window.removeEventListener("keydown", k); }, []);
 
   const chrome = (
     <>
       <div className="fixed inset-x-0 top-0 z-40 flex items-center justify-between gap-3 px-3 py-3 sm:px-6">
-        <a href="#top" className="glass flex items-center gap-2.5 rounded-full py-1.5 pl-1.5 pr-4"><img src="/icons/logo-128.png" alt="" width="32" height="32" className="h-8 w-8 rounded-[22%]" /><span className="font-display text-base font-semibold sm:text-lg">{site.title}</span></a>
+        <a href="#/" className="glass flex items-center gap-2.5 rounded-full py-1.5 pl-1.5 pr-4"><img src="/icons/logo-128.png" alt="" width="32" height="32" className="h-8 w-8 rounded-[22%]" /><span className="font-display text-base font-semibold sm:text-lg">{site.title}</span></a>
+        <NavBar route={route} />
         <div className="flex items-center gap-2">
           <button onClick={() => setAbout(true)} className="glass rounded-full px-4 py-2.5 text-sm font-semibold transition hover:-translate-y-0.5">About</button>
           <InstallButton />
           <ThemeToggle />
+          <NavButton route={route} />
         </div>
       </div>
       <AnimatePresence>
@@ -57,6 +69,16 @@ export default function App() {
       </AnimatePresence>
     </>
   );
+
+  if (route !== "home") {
+    const Pg = PAGE[route];
+    return (
+      <div id="top" className="min-h-dvh">
+        {chrome}
+        <Suspense fallback={<div className="grid h-dvh place-items-center text-sm text-ink/50">Loading…</div>}><Pg /></Suspense>
+      </div>
+    );
+  }
 
   return (
     <div id="top" className="fixed inset-0">

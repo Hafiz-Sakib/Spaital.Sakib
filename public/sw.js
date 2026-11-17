@@ -1,6 +1,6 @@
 // Service worker: makes the site installable and fast on repeat visits / offline.
 // Bump VERSION to force every visitor to drop the old caches.
-const VERSION = "v4";
+const VERSION = "v5";
 const SHELL = `shell-${VERSION}`;      // html, icons, manifest, hashed JS/CSS
 const PHOTOS = `photos-${VERSION}`;    // /gallery/* pictures that were actually viewed
 const MAX_PHOTOS = 1500;               // oldest cached pictures are dropped beyond this
