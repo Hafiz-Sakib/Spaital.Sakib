@@ -16,14 +16,14 @@ const shuffle = (list) => { const r = list.slice(); for (let i = r.length - 1; i
 
 export default function App() {
   const [about, setAbout] = useState(false);
-  const tunnel = useMemo(() => shuffle(images).slice(0, MAX_PHOTOS), []);
+  const tunnel = useMemo(() => shuffle(images).slice(0, MAX_PHOTOS).map((i) => ({ src: i.src, alt: i.alt, href: i.full })), []); // src = 900px WebP texture, href = 1600px WebP opened on click
   useEffect(() => { document.documentElement.style.overflow = "hidden"; return () => { document.documentElement.style.overflow = ""; }; }, []);
   useEffect(() => { const k = (e) => e.key === "Escape" && setAbout(false); window.addEventListener("keydown", k); return () => window.removeEventListener("keydown", k); }, []);
 
   const chrome = (
     <>
       <div className="fixed inset-x-0 top-0 z-40 flex items-center justify-between gap-3 px-3 py-3 sm:px-6">
-        <a href="#top" className="glass flex items-center gap-2.5 rounded-full py-1.5 pl-1.5 pr-4"><img src="/favicon.svg" alt="" className="h-8 w-8 rounded-[22%]" /><span className="font-display text-base font-semibold sm:text-lg">{site.title}</span></a>
+        <a href="#top" className="glass flex items-center gap-2.5 rounded-full py-1.5 pl-1.5 pr-4"><img src="/icons/logo-128.png" alt="" width="32" height="32" className="h-8 w-8 rounded-[22%]" /><span className="font-display text-base font-semibold sm:text-lg">{site.title}</span></a>
         <div className="flex items-center gap-2">
           <button onClick={() => setAbout(true)} className="glass rounded-full px-4 py-2.5 text-sm font-semibold transition hover:-translate-y-0.5">About</button>
           <InstallButton />
@@ -63,7 +63,7 @@ export default function App() {
       {chrome}
       {tunnel.length === 0 ? (
         <div className="grid h-full place-items-center px-6">
-          <p className="max-w-md rounded-2xl border border-dashed border-ink/25 p-10 text-center text-ink/60">No photos yet. Put your pictures in <code>src/images/</code> and restart <code>npm run dev</code>.</p>
+          <p className="max-w-md rounded-2xl border border-dashed border-ink/25 p-10 text-center text-ink/60">No photos yet. Put your pictures in <code>photos/</code> and run <code>npm run dev</code>.</p>
         </div>
       ) : (
         <Suspense fallback={<div className="grid h-full place-items-center text-sm text-ink/50">Loading…</div>}>

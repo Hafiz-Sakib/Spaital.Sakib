@@ -1,5 +1,14 @@
-// Photos live in src/images/. Every jpg/jpeg/png/webp/avif/gif in that folder is picked up automatically
-// (Vite bundles + hashes them, nothing to import by hand). No titles or captions are shown; `alt` is only for screen readers.
-const files = import.meta.glob("./images/*.{jpg,jpeg,png,webp,avif,gif,JPG,JPEG,PNG,WEBP,AVIF,GIF}", { eager: true, query: "?url", import: "default" });
+// Photos live in ONE folder, public/gallery/: N.webp (full), N-medium.webp, N-thumb.webp and are listed in gallery-meta.json
+// (written by scripts/prepare-gallery.mjs):  [[originalName, width, height, version], ...]  oldest -> newest,
+// entry i  <->  file (i + 1).webp.  Nothing is imported per image, so 500 photos cost ~12 KB of JS.
+import meta from "./gallery-meta.json";
 
-export const images = Object.keys(files).sort().map((path) => ({ src: files[path], alt: "Photo", href: files[path] }));
+const BASE = import.meta.env.BASE_URL;
+const url = (tier, i, v) => `${BASE}gallery/${i + 1}${tier === "full" ? "" : "-" + tier}.webp?v=${v}`; // ?v= changes when the picture changes (safe immutable caching)
+
+// No titles, file names or captions are shown anywhere: title/label/caption stay empty. `alt` is only for screen readers.
+export const images = meta.map(([, w, h, v], i) => {
+  const full = url("full", i, v);
+  // src = medium (carousels etc.), thumb = grid/strips, full = lightbox / open in new tab
+  return { src: url("medium", i, v), thumb: url("thumb", i, v), full, w, h, title: "", label: "", alt: "Photo", meta: "", caption: "", href: full };
+});

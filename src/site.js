@@ -1,6 +1,6 @@
 // Your info, taken from your portfolio. Edit freely.
 export const site = {
-  title: "Sakib Gallery", // shown in the header, the browser tab and the installed app
+  title: "Dev Sakib", // shown in the header, the browser tab and the installed app
   name: "Hafiz Sakib",
   full: "Mohammad Hafizur Rahman Sakib",
   tagline: "Full-stack developer · Competitive programmer · NLP researcher",

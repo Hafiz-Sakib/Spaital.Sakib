@@ -1,12 +1,15 @@
 {
- "name": "spatial-gallery-site",
+ "name": "dev-sakib-spatial-gallery",
  "private": true,
  "version": "1.0.0",
  "type": "module",
  "scripts": {
-  "dev": "vite",
-  "build": "vite build",
-  "preview": "vite preview"
+  "dev": "node scripts/dev.mjs",
+  "build": "node scripts/prepare-gallery.mjs && vite build",
+  "preview": "vite preview",
+  "convert": "node scripts/prepare-gallery.mjs",
+  "photos": "node scripts/prepare-gallery.mjs",
+  "gallery:rebuild": "node scripts/prepare-gallery.mjs --rebuild"
  },
  "dependencies": {
   "@gsap/react": "^2.1.2",

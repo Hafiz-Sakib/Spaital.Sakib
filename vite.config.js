@@ -4,6 +4,7 @@ import tailwindcss from "@tailwindcss/vite";
 import { fileURLToPath, URL } from "node:url";
 export default defineConfig({
   plugins: [react(), tailwindcss()],
+  server: { watch: { ignored: ["**/photos/**", "**/src/images/**", "**/originals/**", "**/scripts/gallery-state.json"] } },
   build: { target: "es2020", chunkSizeWarningLimit: 900 },
   resolve: { alias: { "@": fileURLToPath(new URL("./src", import.meta.url)) } },
 });

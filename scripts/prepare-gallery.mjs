@@ -1,6 +1,7 @@
 // Called by `npm run dev` (scripts/dev.mjs, also watches photos/) and by `npm run build` (skipped on Vercel/CI: it deploys what is committed).
 //
 //   photos/            <- DROP any photo here (jpg png webp avif tiff gif svg HEIC ...). Not committed to git.
+//   src/images/        <- also works as an inbox (your old originals). Not committed to git.
 //   originals/         <- your untouched originals are moved here after processing (backup, not committed).
 //   public/gallery/    <- generated + committed, ONE flat folder: 7.webp (1600px), 7-medium.webp (900px), 7-thumb.webp (400px).
 //
@@ -28,7 +29,7 @@ const BUDGET_MB = 95; // Vercel Hobby lists a 100 MB static-upload limit
 const START = 1;
 
 const INBOX = path.resolve("photos");
-const LEGACY = path.resolve("src/gallery"); // old location, still picked up
+const LEGACY = path.resolve("src/images"); // second inbox: originals left in src/images are picked up too (and moved to originals/)
 const BACKUP = path.resolve("originals");
 const OUT = path.resolve("public/gallery");
 const STATE = path.resolve("scripts/gallery-state.json");
@@ -117,7 +118,7 @@ state.items = kept;
 
 // ---------- 2. process new photos ----------
 // Main inbox = photos/. Photos pasted by mistake into public/gallery (any sub-folder, e.g. public/gallery/full/)
-// or into the old src/gallery folder are picked up too, so it never matters where you drop them.
+// or into src/images are picked up too, so it never matters where you drop them.
 const tracked = new Set(state.items.flatMap((it) => tierNames.map((t) => file(t, it.file))));
 const stray = [...(await walk(OUT)), ...(await walk(LEGACY))]
   .filter((f) => ACCEPT.test(f) && !tracked.has(f) && !/-(medium|thumb)\.webp$/.test(f) && !path.basename(f).startsWith(".tmp_"));

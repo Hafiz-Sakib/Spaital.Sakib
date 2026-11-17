@@ -4,6 +4,11 @@ import { useSyncExternalStore } from "react";
 
 let deferred = null;
 let installed = false;
+// Chromium browsers (Android Chrome, Edge...) fire `beforeinstallprompt` only when the app is NOT installed yet.
+const supportsPrompt = typeof window !== "undefined" && "onbeforeinstallprompt" in window;
+const FLAG = "pwa-installed";
+const flagged = () => { try { return localStorage.getItem(FLAG) === "1"; } catch { return false; } };
+const markInstalled = () => { try { localStorage.setItem(FLAG, "1"); } catch {} };
 const subs = new Set();
 const emit = () => subs.forEach((f) => f());
 
@@ -13,11 +18,14 @@ export const isStandalone = () =>
 
 if (typeof window !== "undefined") {
   installed = isStandalone();
+  if (installed) markInstalled();
   window.addEventListener("beforeinstallprompt", (e) => { e.preventDefault(); deferred = e; emit(); });
-  window.addEventListener("appinstalled", () => { deferred = null; installed = true; emit(); });
+  window.addEventListener("appinstalled", () => { deferred = null; installed = true; markInstalled(); emit(); });
 }
 
-const snapshot = () => `${deferred ? "ready" : "manual"}|${installed ? "installed" : "web"}`;
+// "installed" here means: hide the Install button. Shown only if the browser offers the prompt, or (browsers without a
+// prompt, e.g. iPhone Safari / Firefox) if the app was never opened as an installed app on this device.
+const snapshot = () => `${deferred ? "ready" : "manual"}|${!deferred && (installed || flagged() || supportsPrompt) ? "installed" : "web"}`;
 const subscribe = (f) => { subs.add(f); return () => subs.delete(f); };
 
 /** { canPrompt, installed } for the Install button. */

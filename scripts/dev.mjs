@@ -6,7 +6,7 @@ import { spawn } from "node:child_process";
 import fs from "node:fs/promises";
 import path from "node:path";
 
-const PHOTOS = path.resolve("photos");
+const INBOXES = [path.resolve("photos"), path.resolve("src/images")]; // both folders are watched
 const ACCEPT = /\.(jpe?g|jpe|jfif|pjpeg|pjp|png|apng|gif|webp|avif|bmp|tiff?|svg|heic|heif)$/i;
 const POLL_MS = 2000;
 
@@ -23,7 +23,7 @@ const prepare = () => new Promise((resolve) => {
   p.on("exit", (code) => { running = false; resolve(code); });
 });
 
-async function signature(dir) {
+async function signature(dirs) {
   const out = [];
   const walk = async (d) => {
     let entries = [];
@@ -35,25 +35,25 @@ async function signature(dir) {
       else if (ACCEPT.test(e.name)) { const st = await fs.stat(p).catch(() => null); if (st) out.push(`${p}:${st.size}:${st.mtimeMs}`); }
     }
   };
-  await walk(dir);
+  for (const dir of dirs) await walk(dir);
   return out.sort().join("|");
 }
 
 // first pass (the page reloads by itself when it is done)
-console.log("[photos] checking photos/ ...");
+console.log("[photos] checking photos/ and src/images/ ...");
 await prepare();
-let done = await signature(PHOTOS); // what is left after the run (e.g. a file that failed) is not retried in a loop
+let done = await signature(INBOXES); // what is left after the run (e.g. a file that failed) is not retried in a loop
 let prev = done;
 
 setInterval(async () => {
   if (running) return;
-  const sig = await signature(PHOTOS);
+  const sig = await signature(INBOXES);
   const stable = sig === prev;   // same as 2 seconds ago = copy finished
   prev = sig;
   if (stable && sig && sig !== done) {
     console.log("[photos] new photos found, processing ...");
     await prepare();
-    done = await signature(PHOTOS);
+    done = await signature(INBOXES);
     prev = done;
   } else if (!sig) done = sig;
 }, POLL_MS);
