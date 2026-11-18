@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { animate, motion, useInView } from "framer-motion";
 import { PAGES, href } from "../router";
 import { BlurText, Reveal } from "../components/folio-ui";
+import { BackspaceText } from "../components/backspace-text";
 
 export const BG = { lilac: "bg-lilac", mint: "bg-mint", peach: "bg-peach", sky: "bg-sky", lemon: "bg-lemon" };
 
@@ -23,7 +24,7 @@ export function CountUp({ to, suffix = "", className = "" }) {
 }
 
 /* Shared frame of every extra page: title, content, and a link to the next page */
-export default function Page({ id, eyebrow, title, sub, children }) {
+export default function Page({ id, eyebrow, title, sub, typed, children }) {
   const i = PAGES.findIndex((p) => p.id === id);
   const next = PAGES[(i + 1) % PAGES.length];
   return (
@@ -31,7 +32,8 @@ export default function Page({ id, eyebrow, title, sub, children }) {
       <header className="mb-10 sm:mb-14">
         <p className="mb-3 inline-block rounded-full bg-ink/10 px-3 py-1 text-xs font-semibold tracking-wide text-ink/70">{eyebrow}</p>
         <h1 className="font-display text-4xl font-semibold leading-[1] sm:text-6xl"><BlurText text={title} /><span className="bg-gradient-to-r from-violet-500 to-pink-500 bg-clip-text text-transparent">.</span></h1>
-        {sub && <Reveal y={16} scale={1} delay={0.25}><p className="mt-3 max-w-xl text-ink/65">{sub}</p></Reveal>}
+        {typed ? <Reveal y={16} scale={1} delay={0.25}><p className="mt-3 min-h-[3.2rem] max-w-xl text-lg text-ink/65 sm:min-h-0 sm:text-xl"><BackspaceText before={typed.before} words={typed.words} caretClassName="text-violet-500" /></p></Reveal>
+          : sub && <Reveal y={16} scale={1} delay={0.25}><p className="mt-3 max-w-xl text-ink/65">{sub}</p></Reveal>}
       </header>
       {children}
       <nav className="mt-16 flex items-center justify-between gap-3 border-t border-ink/10 pt-6 text-sm font-semibold">

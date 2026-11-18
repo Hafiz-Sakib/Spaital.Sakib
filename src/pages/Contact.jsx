@@ -81,7 +81,7 @@ function Form() {
             </label>
             <input tabIndex={-1} autoComplete="off" aria-hidden value={v.hp} onChange={on("hp")} className="absolute -left-[9999px] h-0 w-0 opacity-0" name="website" />
             {st === "error" && <p role="alert" className="rounded-2xl bg-red-50 px-4 py-3 text-sm text-red-700 dark:bg-red-500/10 dark:text-red-300">Couldn't send right now. Please email me directly at <a className="font-semibold underline" href={`mailto:${me.email}`}>{me.email}</a>.</p>}
-            <button disabled={st === "sending"} className="inline-flex w-full items-center justify-center gap-2 rounded-full bg-ink px-8 py-4 font-semibold text-paper transition hover:bg-ink/85 disabled:opacity-60 sm:w-auto">
+            <button disabled={st === "sending"} className="inline-flex w-full items-center justify-center gap-2 rounded-full bg-ink px-8 py-4 font-semibold text-mist transition hover:bg-ink/85 disabled:opacity-60 sm:w-auto">
               {st === "sending" ? "Sending..." : "Send message"}
               {st !== "sending" && <svg viewBox="0 0 24 24" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14M13 6l6 6-6 6" /></svg>}
             </button>
@@ -131,7 +131,7 @@ function Notify() {
               <motion.form key="f" onSubmit={submit} noValidate initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: "auto" }} exit={{ opacity: 0, height: 0 }} transition={{ duration: 0.3 }} className="overflow-hidden">
                 <div className="flex flex-col gap-2 pt-3 sm:flex-row">
                   <input type="email" inputMode="email" autoComplete="email" value={email} onChange={(e) => setEmail(e.target.value)} aria-invalid={!!err} aria-label="Your email" placeholder="you@example.com" className={`${field} min-w-0 flex-1 !rounded-full bg-surface`} />
-                  <button disabled={st === "sending"} className="inline-flex shrink-0 items-center justify-center rounded-full bg-ink px-6 py-3 text-sm font-semibold text-paper transition hover:bg-ink/85 disabled:opacity-60">{st === "sending" ? "Subscribing..." : "Subscribe"}</button>
+                  <button disabled={st === "sending"} className="inline-flex shrink-0 items-center justify-center rounded-full bg-ink px-6 py-3 text-sm font-semibold text-mist transition hover:bg-ink/85 disabled:opacity-60">{st === "sending" ? "Subscribing..." : "Subscribe"}</button>
                 </div>
                 {err && <p role="alert" className="mt-2 px-2 text-xs font-medium text-red-600 dark:text-red-400">{err}</p>}
                 {st === "error" && <p role="alert" className="mt-2 px-2 text-xs font-medium text-red-600 dark:text-red-400">Couldn't subscribe right now. Please try again in a moment.</p>}
@@ -150,7 +150,7 @@ export default function Contact() {
   const copy = async () => { try { await navigator.clipboard.writeText(me.email); setCopied(true); setTimeout(() => setCopied(false), 1800); } catch { /* clipboard blocked */ } };
   const quick = social.filter((s) => s.name === "WhatsApp" || s.name === "LinkedIn").sort((a) => (a.name === "WhatsApp" ? -1 : 1));
   return (
-    <Page id="contact" eyebrow="Contact" title="Let's talk" sub="Have an idea or a role in mind? Send a message and it lands straight in my inbox.">
+    <Page id="contact" eyebrow="Contact" title="Let's talk" typed={{ before: "Send me a message about", words: ["a project.", "a role.", "research.", "an idea."] }}>
       <div className="grid grid-cols-1 gap-6 lg:grid-cols-[.85fr_1.15fr] [&>*]:min-w-0">
         <Reveal x={-30} y={0} className="h-full">
           <div className="card flex h-full flex-col p-3">

@@ -23,7 +23,7 @@ export default function Projects() {
   const items = useMemo(() => work.map((x) => ({ src: `/work/${x.img}.webp`, hd: `/work/${x.img}-hd.webp`, title: x.title, alt: `${x.title} screenshot`, href: x.live, w: x.w, h: x.h })), []);
 
   return (
-    <Page id="projects" eyebrow="Projects" title="Things I've shipped" sub="Ten projects, from offline learning apps to full-stack platforms. Drag the ribbon, then hover or tap a screenshot to see the project.">
+    <Page id="projects" eyebrow="Projects" title="Things I've shipped" typed={{ before: "Ten projects. Drag the ribbon to explore", words: ["learning apps.", "dev tools.", "full-stack platforms."] }}>
       <Reveal scale={0.94} y={50}>
         <div className="card overflow-hidden p-3">
           <div className="overflow-hidden rounded-[1.4rem] bg-mist">

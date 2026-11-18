@@ -119,7 +119,7 @@ function CertCard({ r, i }) {
 /* No tabs: three blocks one after another, scroll down through them. */
 export default function Journey() {
   return (
-    <Page id="journey" eyebrow="Journey" title="Where I've been" sub="Studies, certificates and work, one scroll from top to bottom.">
+    <Page id="journey" eyebrow="Journey" title="Where I've been" typed={{ before: "One scroll through my", words: ["studies.", "certificates.", "experience."] }}>
       <Block id="education" Icon={FaGraduationCap} title="Education" count={edu.length} tint="sky"><Timeline items={edu} icons={eduIcons} grads={eduGrad} school /></Block>
       <Block id="certificates" Icon={FaAward} title="Certificates" count={certs.length} tint="lilac">
         <ul className="grid gap-3 sm:grid-cols-2">{certs.map((c, i) => <CertCard key={c.t} r={c} i={i} />)}</ul>

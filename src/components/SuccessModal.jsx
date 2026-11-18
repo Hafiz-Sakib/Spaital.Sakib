@@ -42,7 +42,7 @@ export function SuccessModal({ open, onClose, title, text, button = "Done" }) {
             </div>
             <h3 id="success-title" className="mt-5 text-2xl font-bold">{title}</h3>
             <p id="success-text" className="mt-2 text-ink/60">{text}</p>
-            <button ref={btn} onClick={onClose} className="mt-6 rounded-full bg-ink px-7 py-2.5 text-sm font-semibold text-paper transition hover:bg-ink/85">{button}</button>
+            <button ref={btn} onClick={onClose} className="mt-6 rounded-full bg-ink px-7 py-2.5 text-sm font-semibold text-mist transition hover:bg-ink/85">{button}</button>
           </motion.div>
         </motion.div>
       )}
