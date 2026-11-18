@@ -9,15 +9,26 @@ export const site = {
   email: "hafizsakib5@gmail.com",
   social: [
     { name: "GitHub", href: "https://github.com/Hafiz-Sakib" },
-    { name: "LinkedIn", href: "https://www.linkedin.com/in/hafiz-sakib-96b8b3229/" },
+    {
+      name: "LinkedIn",
+      href: "https://www.linkedin.com/in/hafiz-sakib-96b8b3229/",
+    },
     { name: "Codeforces", href: "https://codeforces.com/profile/Hafiz_Sakib" },
     { name: "LeetCode", href: "https://leetcode.com/u/hafiz_Sakib/" },
     { name: "X", href: "https://x.com/hafiz_sakib1" },
     { name: "Instagram", href: "https://www.instagram.com/___sakib.404/" },
     { name: "Facebook", href: "https://www.facebook.com/Sakib1056" },
-    { name: "WhatsApp", href: "https://api.whatsapp.com/send?phone=+8801516195904" },
+    {
+      name: "WhatsApp",
+      href: "https://api.whatsapp.com/send?phone=+8801516195904",
+    },
   ],
 };
 
 // Numbers shown in the About panel.
-export const stats = [{ v: 647, s: "", l: "Codeforces problems" }, { v: 1574, s: "", l: "LeetCode rating" }, { v: 10, s: "", l: "Projects shipped" }, { v: 4, s: "+", l: "Years building" }];
+export const stats = [
+  { v: 647, s: "", l: "Codeforces problems" },
+  { v: 1574, s: "", l: "LeetCode rating" },
+  { v: 10, s: "", l: "Projects shipped" },
+  { v: 4, s: "+", l: "Years building" },
+];

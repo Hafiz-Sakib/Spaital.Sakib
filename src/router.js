@@ -23,21 +23,28 @@ const idFromPath = (path) => {
 
 if (typeof window !== "undefined" && /^#\/[\w-]+/.test(location.hash)) {
   const id = location.hash.replace(/^#\/?/, "").split("?")[0];
-  if (PAGES.some((p) => p.id === id)) history.replaceState(null, "", `${BASE}/${id}`);
+  if (PAGES.some((p) => p.id === id))
+    history.replaceState(null, "", `${BASE}/${id}`);
 }
 
 const read = () => {
-  const id = idFromPath(typeof location === "undefined" ? "" : location.pathname);
+  const id = idFromPath(
+    typeof location === "undefined" ? "" : location.pathname,
+  );
   return PAGES.some((p) => p.id === id) ? id : "home";
 };
 const subscribe = (cb) => {
   window.addEventListener("popstate", cb);
   window.addEventListener("app:navigate", cb);
-  return () => { window.removeEventListener("popstate", cb); window.removeEventListener("app:navigate", cb); };
+  return () => {
+    window.removeEventListener("popstate", cb);
+    window.removeEventListener("app:navigate", cb);
+  };
 };
 
 /** const route = useRoute(); -> "home" | "about" | "projects" | "skills" | "journey" | "coding" | "contact" */
-export const useRoute = () => useSyncExternalStore(subscribe, read, () => "home");
+export const useRoute = () =>
+  useSyncExternalStore(subscribe, read, () => "home");
 export const href = (id) => (id === "home" ? `${BASE}/` : `${BASE}/${id}`);
 
 /** Go to a page without reloading. */
@@ -50,7 +57,15 @@ export function navigate(id) {
 
 /** onClick for <a href={href(id)}>: normal clicks navigate in-app, ctrl/cmd/middle-click still open a new tab. */
 export const go = (id) => (e) => {
-  if (e.defaultPrevented || e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+  if (
+    e.defaultPrevented ||
+    e.button !== 0 ||
+    e.metaKey ||
+    e.ctrlKey ||
+    e.shiftKey ||
+    e.altKey
+  )
+    return;
   e.preventDefault();
   navigate(id);
 };
