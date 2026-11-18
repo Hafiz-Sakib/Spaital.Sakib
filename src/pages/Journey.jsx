@@ -43,13 +43,23 @@ function Steps({ items }) {
   );
 }
 
+/* A link counts as a certificate only if it is a personal certificate URL (Coursera share link, HackerRank certificate,
+   Udemy /certificate/UC-...). Anything else is a public course page, so its button says "View course". */
+const isCertUrl = (u = "") => /coursera\.org\/(share|verify)\/|hackerrank\.com\/certificates\/|udemy\.com\/certificate\/|\/certificate\//i.test(u);
+
+/* Link fixes by certificate title (so src/about.js can stay as it is). Move these into about.js whenever you like. */
+const LINKS = { "Supervised Machine Learning: Regression and Classification": "https://www.coursera.org/learn/machine-learning" };
+
 function Certs() {
-  const items = certs.map((c, i) => {
+  const items = certs.map((c0, i) => {
+    const c = LINKS[c0.t] ? { ...c0, u: LINKS[c0.t] } : c0;
     const Brand = providerIcon[c.o] || LuAward;
+    const real = isCertUrl(c.u);
     return {
       id: `${i}-${c.t}`, title: c.t, meta: `${c.o} · ${c.p}`, tint: BG[providerTint[c.o] || "lemon"],
       icon: <Brand aria-hidden className="h-5 w-5" />,
-      detail: `Issued by ${c.o} in ${c.p}.`, href: c.u, cta: "View certificate",
+      detail: real ? `Certificate issued by ${c.o}, ${c.p}.` : `${c.o} course, ${c.p}.`,
+      href: c.u, cta: real ? "View certificate" : "View course", outline: !real,
     };
   });
   return <ExpandList items={items} />;

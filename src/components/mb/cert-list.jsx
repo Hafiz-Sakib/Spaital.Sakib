@@ -1,6 +1,6 @@
 /* ExpandList (motion-brew "hover expand" style): every row is visible at once as a compact line;
    hover, focus or tap a row and it opens to show the details while the others dim.
-   items: [{ id, icon, tint, title, meta, detail, href?, cta? }] */
+   items: [{ id, icon, tint, title, meta, detail, href?, cta?, outline? }]  (outline = secondary-looking link button) */
 import { useState } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 
@@ -29,7 +29,7 @@ export function ExpandList({ items, className = "" }) {
                 <motion.div initial={still ? false : { height: 0, opacity: 0 }} animate={{ height: "auto", opacity: 1 }} exit={{ height: 0, opacity: 0 }} transition={{ duration: 0.25 }} className="overflow-hidden">
                   <div className="flex flex-wrap items-center justify-between gap-3 px-4 pb-4 pl-[4.75rem] sm:px-5 sm:pl-[5.75rem]">
                     <p className="text-sm text-ink/65">{it.detail}</p>
-                    {it.href && <a href={it.href} target="_blank" rel="noreferrer" className="inline-flex items-center gap-2 rounded-full bg-ink px-4 py-2 text-sm font-semibold text-mist transition hover:bg-ink/85">{it.cta || "Open"} <span aria-hidden>↗</span></a>}
+                    {it.href && <a href={it.href} target="_blank" rel="noreferrer" className={`inline-flex items-center gap-2 rounded-full border-[1.5px] px-4 py-2 text-sm font-semibold transition ${it.outline ? "border-ink/35 bg-surface text-ink hover:border-ink/60 hover:bg-mist" : "border-ink bg-ink text-mist hover:bg-ink/85"}`}>{it.cta || "Open"} <span aria-hidden>↗</span></a>}
                   </div>
                 </motion.div>
               )}

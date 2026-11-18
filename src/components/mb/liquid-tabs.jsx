@@ -13,7 +13,7 @@ export function LiquidTabs({ tabs, value, onChange, children, className = "" }) 
           const on = t.id === value;
           const Ico = t.icon;
           return (
-            <button key={t.id} role="tab" aria-selected={on} onClick={() => onChange(t.id)} className={`relative flex min-w-0 flex-1 items-center justify-center gap-2 px-2 pb-3 pt-3.5 text-sm font-semibold transition-colors sm:flex-none sm:px-7 ${on ? "text-ink" : "text-ink/50 hover:text-ink/80"}`}>
+            <button key={t.id} role="tab" aria-selected={on} onClick={() => onChange(t.id)} className={`relative flex min-w-0 flex-1 items-center justify-center gap-2 rounded-t-[1.4rem] px-2 pb-3 pt-3.5 text-sm font-semibold outline-none transition-colors focus-visible:ring-2 focus-visible:ring-ink/40 sm:flex-none sm:px-7 ${on ? "text-ink" : "text-ink/50 hover:text-ink/80"}`}>
               {on && <motion.span layoutId={`${uid}-bump`} transition={{ type: "spring", stiffness: 420, damping: 34 }} className="absolute inset-x-0 -bottom-1 top-0 rounded-t-[1.4rem] bg-surface shadow-[0_-8px_24px_-14px_rgba(20,21,26,.25)]" />}
               {!on && <span aria-hidden className="absolute inset-x-1 inset-y-1.5 rounded-2xl bg-ink/[.04] opacity-0 transition-opacity hover:opacity-100" />}
               <span className="relative flex items-center gap-2">{Ico && <Ico aria-hidden className="h-[18px] w-[18px] shrink-0" />}<span className="truncate">{t.label}</span></span>
