@@ -1,0 +1,49 @@
+{
+  "hash": "9085e500",
+  "configHash": "d917d9a2",
+  "lockfileHash": "4445cb91",
+  "browserHash": "dff2bace",
+  "optimized": {
+    "react-dom/client": {
+      "src": "../../node_modules/react-dom/client.js",
+      "file": "react-dom_client.js",
+      "fileHash": "3b89b4c5",
+      "needsInterop": true
+    },
+    "react": {
+      "src": "../../node_modules/react/index.js",
+      "file": "react.js",
+      "fileHash": "8edcf9c2",
+      "needsInterop": true
+    },
+    "motion-brew/spatial-gallery": {
+      "src": "../../node_modules/motion-brew/dist/spatial-gallery.js",
+      "file": "motion-brew_spatial-gallery.js",
+      "fileHash": "5317f33a",
+      "needsInterop": false
+    },
+    "react-dom": {
+      "src": "../../node_modules/react-dom/index.js",
+      "file": "react-dom.js",
+      "fileHash": "8e6424d1",
+      "needsInterop": true
+    },
+    "framer-motion": {
+      "src": "../../node_modules/framer-motion/dist/es/index.mjs",
+      "file": "framer-motion.js",
+      "fileHash": "ab7a32d0",
+      "needsInterop": false
+    }
+  },
+  "chunks": {
+    "chunk-35C4W5R3": {
+      "file": "chunk-35C4W5R3.js"
+    },
+    "chunk-2R3DNFP4": {
+      "file": "chunk-2R3DNFP4.js"
+    },
+    "chunk-JRE55LYH": {
+      "file": "chunk-JRE55LYH.js"
+    }
+  }
+}
