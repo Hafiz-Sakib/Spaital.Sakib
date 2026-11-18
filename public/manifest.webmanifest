@@ -9,10 +9,7 @@
   "orientation": "any",
   "background_color": "#F3F4F7",
   "theme_color": "#F3F4F7",
-  "categories": [
-    "photo",
-    "lifestyle"
-  ],
+  "categories": ["photo", "lifestyle"],
   "icons": [
     {
       "src": "/icons/icon-192.png",
