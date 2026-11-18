@@ -3,7 +3,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import { LuMail, LuMessageSquareText, LuTag, LuUser } from "react-icons/lu";
 import { site } from "../site";
 import { Icon } from "../components/icons";
-import { AsciiShape } from "../components/AsciiShape";
+import { OrbitCard } from "../components/mb/orbit-card";
 import { BellToggle } from "../components/BellToggle";
 import { SuccessModal } from "../components/SuccessModal";
 import Page, { Reveal } from "./Page";
@@ -155,7 +155,10 @@ export default function Contact() {
         <Reveal x={-30} y={0} className="h-full">
           <div className="card flex h-full flex-col p-3">
             <div className="flex-1 rounded-[1.4rem] bg-gradient-to-b from-surface to-mist/70 px-6 pb-6 pt-8 text-center">
-              <AsciiShape className="mx-auto h-64 w-full max-w-[19rem] sm:h-72" />
+              <OrbitCard
+                center={<img src="/profile.webp" alt="" className="h-20 w-20 rounded-[1.6rem] object-cover shadow-lg ring-4 ring-surface" />}
+                items={(site.social || []).map((s) => ({ key: s.name, href: s.href, label: s.name, node: <Icon name={s.name} className="h-5 w-5" /> }))}
+              />
               <h3 className="mt-4 text-2xl font-extrabold">Let's build something that flows</h3>
               <p className="mt-1 text-ink/55">Open to roles, freelance and research chats.</p>
               <button onClick={copy} className="mt-6 flex w-full items-center justify-between gap-3 rounded-full bg-mist px-5 py-3.5 text-sm font-semibold hover:bg-ink/10">
@@ -172,17 +175,6 @@ export default function Contact() {
         <Reveal x={30} y={0} delay={0.1} className="h-full"><Form /></Reveal>
       </div>
       <Reveal><Notify /></Reveal>
-      {social.length > 0 && (
-        <ul className="mt-10 flex flex-wrap gap-2" aria-label="Social links">
-          {social.map((s) => (
-            <li key={s.name}>
-              <a href={s.href} target="_blank" rel="noreferrer" aria-label={s.name} title={s.name} className="grid h-11 w-11 place-items-center rounded-full bg-surface shadow-sm ring-1 ring-ink/[.08] transition duration-200 hover:-translate-y-1 hover:shadow-md">
-                <Icon name={s.name} className="h-5 w-5" />
-              </a>
-            </li>
-          ))}
-        </ul>
-      )}
     </Page>
   );
 }
