@@ -58,9 +58,9 @@ function Form() {
   };
 
   return (
-    <div className="card p-6 sm:p-8">
+    <div className="card flex h-full flex-col p-6 sm:p-8">
       <SuccessModal open={sent} onClose={() => setSent(false)} title="Message sent" text="Thanks for reaching out. I'll reply by email soon." />
-      <motion.form key="form" onSubmit={submit} noValidate initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="space-y-4">
+      <motion.form key="form" onSubmit={submit} noValidate initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="flex flex-1 flex-col gap-4">
             <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
               <label className="block text-sm font-semibold"><span className="flex items-center gap-1.5"><LuUser aria-hidden className="h-4 w-4 text-ink/55" />Name</span>
                 <input className={`${field} mt-1.5`} value={v.name} onChange={on("name")} autoComplete="name" aria-invalid={!!err.name} placeholder="Your name" />
@@ -75,13 +75,13 @@ function Form() {
               <input className={`${field} mt-1.5`} value={v.subject} onChange={on("subject")} maxLength={120} aria-invalid={!!err.subject} placeholder="What is this about? (job, freelance, research...)" />
               {err.subject && <span className="mt-1 block text-xs font-medium text-red-600 dark:text-red-400">{err.subject}</span>}
             </label>
-            <label className="block text-sm font-semibold"><span className="flex items-center gap-1.5"><LuMessageSquareText aria-hidden className="h-4 w-4 text-ink/55" />Message</span>
-              <textarea className={`${field} mt-1.5 h-[170px] resize-none`} value={v.message} onChange={on("message")} aria-invalid={!!err.message} placeholder="Tell me about your idea, role or project" />
+            <label className="flex flex-1 flex-col text-sm font-semibold"><span className="flex items-center gap-1.5"><LuMessageSquareText aria-hidden className="h-4 w-4 text-ink/55" />Message</span>
+              <textarea className={`${field} mt-1.5 min-h-[170px] flex-1 resize-none`} value={v.message} onChange={on("message")} aria-invalid={!!err.message} placeholder="Tell me about your idea, role or project" />
               {err.message && <span className="mt-1 block text-xs font-medium text-red-600 dark:text-red-400">{err.message}</span>}
             </label>
             <input tabIndex={-1} autoComplete="off" aria-hidden value={v.hp} onChange={on("hp")} className="absolute -left-[9999px] h-0 w-0 opacity-0" name="website" />
             {st === "error" && <p role="alert" className="rounded-2xl bg-red-50 px-4 py-3 text-sm text-red-700 dark:bg-red-500/10 dark:text-red-300">Couldn't send right now. Please email me directly at <a className="font-semibold underline" href={`mailto:${me.email}`}>{me.email}</a>.</p>}
-            <button disabled={st === "sending"} className="inline-flex w-full items-center justify-center gap-2 rounded-full bg-ink px-8 py-4 font-semibold text-mist transition hover:bg-ink/85 disabled:opacity-60 sm:w-auto">
+            <button disabled={st === "sending"} className="inline-flex w-full items-center justify-center gap-2 rounded-full bg-ink px-8 py-4 font-semibold text-mist transition hover:bg-ink/85 disabled:opacity-60 sm:w-auto sm:self-start">
               {st === "sending" ? "Sending..." : "Send message"}
               {st !== "sending" && <svg viewBox="0 0 24 24" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14M13 6l6 6-6 6" /></svg>}
             </button>

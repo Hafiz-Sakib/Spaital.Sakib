@@ -1,11 +1,11 @@
 import { useRef, useState } from "react";
 import { motion, useReducedMotion, useScroll, useSpring } from "framer-motion";
-import { FaArrowUpRightFromSquare, FaAward, FaBriefcase, FaGraduationCap } from "react-icons/fa6";
-import { LuAward, LuCalendarDays, LuCheck } from "react-icons/lu";
+import { FaAward, FaBriefcase, FaGraduationCap } from "react-icons/fa6";
+import { LuAward, LuCheck } from "react-icons/lu";
 import { SiCoursera, SiHackerrank, SiUdemy } from "react-icons/si";
 import { certs, edu, jobs } from "../about";
 import { LiquidTabs } from "../components/mb/liquid-tabs";
-import { RollingStack } from "../components/mb/rolling-stack";
+import { ExpandList } from "../components/mb/cert-list";
 import { Reveal } from "../components/folio-ui";
 import Page, { BG } from "./Page";
 
@@ -43,20 +43,16 @@ function Steps({ items }) {
   );
 }
 
-function CertCard({ c, active }) {
-  const Brand = providerIcon[c.o] || LuAward;
-  const inner = (
-    <>
-      <span className={`grid h-12 w-12 shrink-0 place-items-center rounded-2xl ${BG[providerTint[c.o] || "lemon"]}`}><Brand aria-hidden className="h-5 w-5" /></span>
-      <span className="min-w-0 flex-1">
-        <span className="block truncate font-display text-base font-bold leading-tight sm:text-lg">{c.t}</span>
-        <span className="mt-0.5 flex items-center gap-2 text-sm text-ink/55"><span className="truncate">{c.o}</span><span aria-hidden>·</span><span className="inline-flex items-center gap-1 tabular-nums"><LuCalendarDays aria-hidden className="h-3.5 w-3.5" />{c.p}</span></span>
-      </span>
-      {c.u && active && <FaArrowUpRightFromSquare aria-label="View certificate" className="h-3.5 w-3.5 shrink-0 text-ink/60" />}
-    </>
-  );
-  const cls = "card flex h-full items-center gap-4 px-5";
-  return c.u && active ? <a href={c.u} target="_blank" rel="noreferrer" className={cls}>{inner}</a> : <div className={cls}>{inner}</div>;
+function Certs() {
+  const items = certs.map((c, i) => {
+    const Brand = providerIcon[c.o] || LuAward;
+    return {
+      id: `${i}-${c.t}`, title: c.t, meta: `${c.o} · ${c.p}`, tint: BG[providerTint[c.o] || "lemon"],
+      icon: <Brand aria-hidden className="h-5 w-5" />,
+      detail: `Issued by ${c.o} in ${c.p}.`, href: c.u, cta: "View certificate",
+    };
+  });
+  return <ExpandList items={items} />;
 }
 
 const TABS = [
@@ -74,7 +70,7 @@ export default function Journey() {
           <motion.div key={tab} initial={{ opacity: 0, y: 10, filter: "blur(6px)" }} animate={{ opacity: 1, y: 0, filter: "blur(0px)" }} transition={{ duration: 0.35 }}>
             {tab === "edu" && <Steps items={edu} />}
             {tab === "exp" && <Steps items={jobs} />}
-            {tab === "cert" && <RollingStack items={certs} label="Certificates" cardHeight={104} renderCard={(c, active) => <CertCard c={c} active={active} />} />}
+            {tab === "cert" && <Certs />}
           </motion.div>
         </LiquidTabs>
       </Reveal>

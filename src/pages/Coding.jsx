@@ -1,19 +1,50 @@
-import { useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { motion } from "framer-motion";
 import { cp } from "../folio";
 import { stats } from "../work";
 import { Icon } from "../components/icons";
 import { Odometer } from "../components/mb/odometer";
 import { UsageRing } from "../components/mb/usage-ring";
+import { ActivityGrid } from "../components/mb/activity-grid";
+import { CalendarAgenda } from "../components/mb/calendar-agenda";
 import { Reveal } from "../components/folio-ui";
 import Page from "./Page";
 
 const LEVEL = [["Easy", "#34D399", "e"], ["Medium", "#FBBF24", "m"], ["Hard", "#F43F5E", "hd"]];
 const solved = (p) => p.e + p.m + p.hd;
+/* Weekly practice planner: a starter plan you can edit (add, finish, delete). Saved in this browser only, one copy per week. */
+const SEED = [
+  [["21:00", "LeetCode daily", "1 problem", "amber"]],
+  [["20:30", "Codeforces upsolve", "Last contest, problems C-D", "violet"]],
+  [["21:00", "Graph theory set", "BFS / DFS / shortest paths", "sky"]],
+  [["21:00", "LeetCode daily", "1 problem", "amber"]],
+  [["20:00", "Thesis reading", "Bangla NLP papers", "green"]],
+  [["20:05", "Codeforces round", "Rated contest", "pink"]],
+  [["18:00", "Weekly review", "Update the tracker", "ink"]],
+];
+const DAYS = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
+const mondayOf = (d = new Date()) => { const x = new Date(d); x.setHours(0, 0, 0, 0); x.setDate(x.getDate() - ((x.getDay() + 6) % 7)); return x; };
+const seedWeek = () => SEED.map((list, d) => list.map(([time, title, meta, tone], i) => ({ id: `s${d}-${i}`, time, title, meta, tone, done: false })));
+function usePlanner() {
+  const start = useMemo(() => mondayOf(), []);
+  const key = `coding-planner:${start.toISOString().slice(0, 10)}`;
+  const [plan, setPlan] = useState(() => { try { const v = JSON.parse(localStorage.getItem(key)); if (Array.isArray(v) && v.length === 7) return v; } catch { /* storage blocked */ } return seedWeek(); });
+  useEffect(() => { try { localStorage.setItem(key, JSON.stringify(plan)); } catch { /* storage blocked */ } }, [key, plan]);
+  const days = plan.map((events, i) => { const d = new Date(start); d.setDate(start.getDate() + i); return { id: String(i), label: DAYS[i], date: d.getDate(), long: d.toLocaleDateString("en", { weekday: "long", day: "numeric", month: "long" }), events: [...events].sort((a, b) => a.time.localeCompare(b.time)) }; });
+  const edit = (i, fn) => setPlan((p) => p.map((l, k) => (k === i ? fn(l) : l)));
+  return {
+    days, today: (new Date().getDay() + 6) % 7,
+    toggle: (ev, done) => plan.forEach((l, i) => l.some((e) => e.id === ev.id) && edit(i, (L) => L.map((e) => (e.id === ev.id ? { ...e, done } : e)))),
+    remove: (ev) => plan.forEach((l, i) => l.some((e) => e.id === ev.id) && edit(i, (L) => L.filter((e) => e.id !== ev.id))),
+    add: (dayId, { time, title }) => edit(Number(dayId), (L) => [...L, { id: `n${Date.now()}`, time, title, meta: "Added by me", tone: "violet", done: false }]),
+  };
+}
+
 const PLAT = ["#7C6CF6", "#38BDF8", "#34D399", "#F59E0B"];
 
 export default function Coding() {
   const [a, setA] = useState(0);
+  const planner = usePlanner();
   const p = cp[a];
   const total = cp.reduce((s, x) => s + solved(x), 0);
   return (
@@ -88,6 +119,20 @@ export default function Coding() {
               </ul>
             </div>
           </motion.div>
+        </div>
+      </Reveal>
+
+      {/* contribution heatmap */}
+      <Reveal y={24} scale={1} delay={0.05} className="mt-6">
+        <ActivityGrid title="Contributions" user="Hafiz-Sakib" palette="green" />
+      </Reveal>
+
+      {/* weekly practice planner */}
+      <Reveal y={24} scale={1} delay={0.05} className="mt-6">
+        <div className="card p-3 sm:p-6">
+          <h2 className="px-2 pt-2 font-display text-2xl font-semibold sm:px-0 sm:pt-0">This week's practice</h2>
+          <p className="mb-5 mt-1 px-2 text-sm text-ink/55 sm:px-0">A starter plan. Finish, delete or add tasks; it saves in your browser.</p>
+          <CalendarAgenda title="Planner" days={planner.days} defaultDay={planner.today} onToggle={planner.toggle} onDelete={planner.remove} onAdd={planner.add} />
         </div>
       </Reveal>
     </Page>

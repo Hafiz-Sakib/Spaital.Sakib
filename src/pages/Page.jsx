@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { animate, motion, useInView } from "framer-motion";
-import { PAGES, href } from "../router";
+import { PAGES, go, href } from "../router";
 import { BlurText, Reveal } from "../components/folio-ui";
 import { BackspaceText } from "../components/backspace-text";
 
@@ -37,8 +37,8 @@ export default function Page({ id, eyebrow, title, sub, typed, children }) {
       </header>
       {children}
       <nav className="mt-16 flex items-center justify-between gap-3 border-t border-ink/10 pt-6 text-sm font-semibold">
-        <a href={href("home")} className="rounded-full bg-ink/10 px-5 py-2.5 transition hover:-translate-y-0.5">← Photos</a>
-        <a href={href(next.id)} className="rounded-full bg-ink px-5 py-2.5 text-mist transition hover:-translate-y-0.5">Next: {next.label} →</a>
+        <a href={href("home")} onClick={go("home")} className="rounded-full bg-ink/10 px-5 py-2.5 transition hover:-translate-y-0.5">← Photos</a>
+        <a href={href(next.id)} onClick={go(next.id)} className="rounded-full bg-ink px-5 py-2.5 text-mist transition hover:-translate-y-0.5">Next: {next.label} →</a>
       </nav>
     </motion.main>
   );

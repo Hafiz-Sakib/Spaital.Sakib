@@ -5,7 +5,7 @@ import ThemeToggle from "./components/ThemeToggle";
 import InstallButton from "./components/InstallButton";
 import { SideNav, BottomNav } from "./components/NavMenu";
 import { BackspaceText } from "./components/backspace-text";
-import { useRoute } from "./router";
+import { go, href, useRoute } from "./router";
 
 const PAGE = {
   about: lazy(() => import("./pages/About")),
@@ -32,7 +32,7 @@ export default function App() {
   const chrome = (
     <>
       <div className="fixed inset-x-0 top-0 z-40 flex items-center justify-between gap-3 px-3 py-3 sm:px-6">
-        <a href="#/" className="glass flex items-center gap-2.5 rounded-full py-1.5 pl-1.5 pr-4"><img src="/icons/logo-128.png" alt="" width="32" height="32" className="h-8 w-8 rounded-[22%]" /><span className="font-display text-base font-semibold sm:text-lg">{site.title}</span></a>
+        <a href={href("home")} onClick={go("home")} className="glass flex items-center gap-2.5 rounded-full py-1.5 pl-1.5 pr-4"><img src="/icons/logo-128.png" alt="" width="32" height="32" className="h-8 w-8 rounded-[22%]" /><span className="font-display text-base font-semibold sm:text-lg">{site.title}</span></a>
         <div className="flex items-center gap-2">
           <InstallButton />
           <ThemeToggle />

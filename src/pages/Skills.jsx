@@ -15,9 +15,9 @@ export default function Skills() {
     <Page id="skills" eyebrow="Skills" title="What I work with" typed={{ before: "Web, algorithms and", words: ["machine learning.", "clean interfaces.", "solid backends."] }}>
       <Reveal y={24} scale={1}>
         <div className="card p-4 sm:p-8">
-          <div role="tablist" aria-label="Skill groups" className="flex gap-1 overflow-x-auto rounded-full bg-ink/[.06] p-1">
+          <div role="tablist" aria-label="Skill groups" className="flex items-center gap-1 overflow-x-auto rounded-full bg-ink/[.06] p-1 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
             {skills.map(([t], i) => (
-              <button key={t} role="tab" aria-selected={a === i} onClick={() => setA(i)} className="relative shrink-0 rounded-full px-4 py-2.5 text-sm font-semibold">
+              <button key={t} role="tab" aria-selected={a === i} onClick={() => setA(i)} className="relative inline-flex h-10 shrink-0 items-center justify-center whitespace-nowrap rounded-full px-4 text-sm font-semibold outline-none focus-visible:ring-2 focus-visible:ring-ink/40 sm:flex-1 sm:px-3">
                 {a === i && <motion.span layoutId="skill-pill" transition={{ type: "spring", stiffness: 420, damping: 32 }} className="absolute inset-0 rounded-full bg-surface shadow-sm" />}
                 <span className={`relative ${a === i ? "text-ink" : "text-ink/55"}`}>{t}</span>
               </button>

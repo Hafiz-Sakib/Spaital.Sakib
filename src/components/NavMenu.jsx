@@ -1,5 +1,5 @@
 import { LayoutGroup, motion } from "framer-motion";
-import { PAGES, href } from "../router";
+import { PAGES, go, href, navigate } from "../router";
 import { ICONS, TabBar } from "./TabBar";
 
 /* One entry per page. `icon` is a key of ICONS in TabBar.jsx (animated lucide icons from motion-brew). */
@@ -15,7 +15,7 @@ export function SideNav({ route }) {
           const on = route === x.id;
           const Ico = ICONS[x.icon];
           return (
-            <a key={x.id} href={href(x.id)} aria-label={x.label} aria-current={on ? "page" : undefined} className="group relative grid h-11 w-11 place-items-center rounded-full outline-none focus-visible:ring-2 focus-visible:ring-ink/40">
+            <a key={x.id} href={href(x.id)} onClick={go(x.id)} aria-label={x.label} aria-current={on ? "page" : undefined} className="group relative grid h-11 w-11 place-items-center rounded-full outline-none focus-visible:ring-2 focus-visible:ring-ink/40">
               {on && <motion.span layoutId="side-pill" className="absolute inset-0 rounded-full bg-ink" transition={{ type: "spring", stiffness: 420, damping: 34 }} />}
               <span className={`relative grid transition-colors ${on ? "text-mist" : "text-ink/60 group-hover:text-ink"}`}><Ico active={on} strokeWidth={2.1} /></span>
               <span aria-hidden className="pointer-events-none absolute right-full mr-3 translate-x-1 whitespace-nowrap rounded-full bg-ink px-3 py-1.5 text-xs font-semibold text-mist opacity-0 transition duration-150 group-hover:translate-x-0 group-hover:opacity-100 group-focus-visible:translate-x-0 group-focus-visible:opacity-100">{x.label}</span>
@@ -31,7 +31,7 @@ export function SideNav({ route }) {
 export function BottomNav({ route }) {
   return (
     <div className="pointer-events-none fixed inset-x-0 bottom-0 z-40 flex justify-center px-2 pb-[max(0.75rem,env(safe-area-inset-bottom))] lg:hidden">
-      <TabBar tabs={ITEMS} variant="pill" value={route} onChange={(id) => { window.location.hash = href(id); }} className="pointer-events-auto" />
+      <TabBar tabs={ITEMS} variant="pill" value={route} onChange={navigate} className="pointer-events-auto" />
     </div>
   );
 }
