@@ -1,11 +1,11 @@
 // Service worker: makes the site installable and fast on repeat visits / offline.
 // Bump VERSION to force every visitor to drop the old caches.
-const VERSION = "v6";
+const VERSION = "v7";
 const SHELL = `shell-${VERSION}`;      // html, icons, manifest, hashed JS/CSS
 const PHOTOS = `photos-${VERSION}`;    // /gallery/* pictures that were actually viewed
 const MAX_PHOTOS = 1500;               // oldest cached pictures are dropped beyond this
 
-const PRECACHE = ["/", "/favicon.ico", "/favicon-32.png", "/manifest.webmanifest", "/icons/icon-192.png", "/icons/icon-512.png", "/icons/logo-128.png", "/apple-touch-icon.png"];
+const PRECACHE = ["/", "/favicon.ico", "/favicon-32.png", "/manifest.webmanifest", "/icons/icon-192.png", "/icons/icon-512.png", "/icons/logo-128.png", "/icons/logo-mark.png", "/apple-touch-icon.png"];
 
 self.addEventListener("install", (e) => {
   e.waitUntil(caches.open(SHELL).then((c) => c.addAll(PRECACHE)).then(() => self.skipWaiting()));

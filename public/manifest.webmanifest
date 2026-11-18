@@ -1,8 +1,8 @@
 {
   "id": "/",
-  "name": "Dev Sakib",
-  "short_name": "Dev Sakib",
-  "description": "Dev Sakib: spatial photo gallery by Hafiz Sakib",
+  "name": "Sakib",
+  "short_name": "Sakib",
+  "description": "Sakib: spatial photo gallery by Hafiz Sakib",
   "start_url": "/",
   "scope": "/",
   "display": "standalone",
@@ -25,12 +25,6 @@
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "any"
-    },
-    {
-      "src": "/icons/icon-maskable-512.png",
-      "sizes": "512x512",
-      "type": "image/png",
-      "purpose": "maskable"
     }
   ]
 }

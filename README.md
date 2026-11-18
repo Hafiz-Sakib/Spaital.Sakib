@@ -1,8 +1,8 @@
 <div align="center">
 
-<img src="docs/logo.png" alt="Dev Sakib logo" width="420" />
+<img src="docs/logo.png" alt="Sakib logo" width="420" />
 
-# Dev Sakib · Spatial Gallery
+# Sakib · Spatial Gallery
 
 **A single-page WebGL photo tunnel you fly through. Installable PWA, day/night theme, zero backend.**
 Drop in photos, run one command, publish to Vercel for free.
@@ -20,7 +20,7 @@ Drop in photos, run one command, publish to Vercel for free.
 
 ## Screenshot
 
-![Dev Sakib Spatial Gallery](docs/screenshots/gallery.png)
+![Sakib Spatial Gallery](docs/screenshots/gallery.png)
 
 > Scroll, drag or hover to travel through the tunnel. Click a photo to open the full-size image in a new tab.
 
@@ -134,7 +134,7 @@ All the rules are in `.gitignore`.
 - Tap **Install** in the header. On Android and desktop Chrome/Edge the browser's install dialog opens immediately, so the app installs with one click.
 - On browsers without an install dialog (iPhone Safari, Firefox) the button shows a short how-to (Share, then Add to Home Screen).
 - The button is **hidden** when the app is already installed or opened as the installed app, and on Chromium browsers that do not offer an install (for example when it is already installed on that device).
-- Name: **Dev Sakib**. Icons: generated from the Dev Sakib logo (`public/icons/`, `public/apple-touch-icon.png`, `public/favicon.ico`, `public/favicon-32.png`).
+- Name: **Sakib**. Icons: generated from the Sakib logo (transparent background) (`public/icons/`, `public/apple-touch-icon.png`, `public/favicon.ico`, `public/favicon-32.png`).
 - The service worker is registered only in production (`npm run build` / Vercel), so the Install button appears on the deployed HTTPS site, not in `npm run dev`.
 - Bump `VERSION` in `public/sw.js` to make every visitor drop the old caches.
 
@@ -145,13 +145,13 @@ All the rules are in `.gitignore`.
 ```bash
 spital/
 ├── docs/
-│   ├── logo.png                  # Dev Sakib logo (README)
+│   ├── logo.png                  # Sakib logo (README)
 │   └── screenshots/gallery.png   # screenshot used in this README
 ├── photos/                       # DROP YOUR PHOTOS HERE (git-ignored)
 ├── originals/                    # backups of processed originals (git-ignored, auto-created)
 ├── public/
 │   ├── gallery/                  # generated WebP: N.webp, N-medium.webp, N-thumb.webp (committed)
-│   ├── icons/                    # PWA icons (192, 512, maskable 512) + header logo
+│   ├── icons/                    # PWA icons (192, 512, transparent) + header logo
 │   ├── favicon.ico, favicon-32.png, apple-touch-icon.png
 │   ├── manifest.webmanifest      # PWA manifest
 │   ├── sw.js                     # service worker
