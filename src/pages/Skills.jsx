@@ -10,21 +10,59 @@ import Page, { BG } from "./Page";
 export default function Skills() {
   const [a, setA] = useState(0);
   const [title, c, list] = skills[a];
-  const apps = list.map((s) => ({ id: s, name: s, tint: BG[c], icon: <Icon name={s} className="h-6 w-6" /> }));
+  const apps = list.map((s) => ({
+    id: s,
+    name: s,
+    tint: BG[c],
+    icon: <Icon name={s} className="h-6 w-6" />,
+  }));
   return (
-    <Page id="skills" eyebrow="Skills" title="What I work with" typed={{ before: "Web, algorithms and", words: ["machine learning.", "clean interfaces.", "solid backends."] }}>
+    <Page
+      id="skills"
+      eyebrow="Skills"
+      title="What I work with"
+      typed={{
+        before: "Web, algorithms and",
+        words: ["machine learning.", "clean interfaces.", "solid backends."],
+      }}
+    >
       <Reveal y={24} scale={1}>
         <div className="card p-4 sm:p-8">
-          <div role="tablist" aria-label="Skill groups" className="flex items-center gap-1 overflow-x-auto rounded-full bg-ink/[.06] p-1 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+          <div
+            role="tablist"
+            aria-label="Skill groups"
+            className="flex items-center gap-1 overflow-x-auto rounded-full bg-ink/6 p-1 scrollbar-none [&::-webkit-scrollbar]:hidden"
+          >
             {skills.map(([t], i) => (
-              <button key={t} role="tab" aria-selected={a === i} onClick={() => setA(i)} className="relative inline-flex h-10 shrink-0 items-center justify-center whitespace-nowrap rounded-full px-4 text-sm font-semibold outline-none focus-visible:ring-2 focus-visible:ring-ink/40 sm:flex-1 sm:px-3">
-                {a === i && <motion.span layoutId="skill-pill" transition={{ type: "spring", stiffness: 420, damping: 32 }} className="absolute inset-0 rounded-full bg-surface shadow-sm" />}
-                <span className={`relative ${a === i ? "text-ink" : "text-ink/55"}`}>{t}</span>
+              <button
+                key={t}
+                role="tab"
+                aria-selected={a === i}
+                onClick={() => setA(i)}
+                className="relative inline-flex h-10 shrink-0 items-center justify-center whitespace-nowrap rounded-full px-4 text-sm font-semibold outline-none focus-visible:ring-2 focus-visible:ring-ink/40 sm:flex-1 sm:px-3"
+              >
+                {a === i && (
+                  <motion.span
+                    layoutId="skill-pill"
+                    transition={{ type: "spring", stiffness: 420, damping: 32 }}
+                    className="absolute inset-0 rounded-full bg-surface shadow-sm"
+                  />
+                )}
+                <span
+                  className={`relative ${a === i ? "text-ink" : "text-ink/55"}`}
+                >
+                  {t}
+                </span>
               </button>
             ))}
           </div>
           <div className="mt-4 sm:mt-6">
-            <IntegrationHub key={title} apps={apps} label={title} sub={`${list.length} skills`} />
+            <IntegrationHub
+              key={title}
+              apps={apps}
+              label={title}
+              sub={`${list.length} skills`}
+            />
           </div>
         </div>
       </Reveal>

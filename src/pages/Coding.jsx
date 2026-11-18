@@ -10,7 +10,11 @@ import { CalendarAgenda } from "../components/mb/calendar-agenda";
 import { Reveal } from "../components/folio-ui";
 import Page from "./Page";
 
-const LEVEL = [["Easy", "#34D399", "e"], ["Medium", "#FBBF24", "m"], ["Hard", "#F43F5E", "hd"]];
+const LEVEL = [
+  ["Easy", "#34D399", "e"],
+  ["Medium", "#FBBF24", "m"],
+  ["Hard", "#F43F5E", "hd"],
+];
 const solved = (p) => p.e + p.m + p.hd;
 /* Weekly practice planner: a starter plan you can edit (add, finish, delete). Saved in this browser only, one copy per week. */
 const SEED = [
@@ -23,20 +27,86 @@ const SEED = [
   [["18:00", "Weekly review", "Update the tracker", "ink"]],
 ];
 const DAYS = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
-const mondayOf = (d = new Date()) => { const x = new Date(d); x.setHours(0, 0, 0, 0); x.setDate(x.getDate() - ((x.getDay() + 6) % 7)); return x; };
-const seedWeek = () => SEED.map((list, d) => list.map(([time, title, meta, tone], i) => ({ id: `s${d}-${i}`, time, title, meta, tone, done: false })));
+const mondayOf = (d = new Date()) => {
+  const x = new Date(d);
+  x.setHours(0, 0, 0, 0);
+  x.setDate(x.getDate() - ((x.getDay() + 6) % 7));
+  return x;
+};
+const seedWeek = () =>
+  SEED.map((list, d) =>
+    list.map(([time, title, meta, tone], i) => ({
+      id: `s${d}-${i}`,
+      time,
+      title,
+      meta,
+      tone,
+      done: false,
+    })),
+  );
 function usePlanner() {
   const start = useMemo(() => mondayOf(), []);
   const key = `coding-planner:${start.toISOString().slice(0, 10)}`;
-  const [plan, setPlan] = useState(() => { try { const v = JSON.parse(localStorage.getItem(key)); if (Array.isArray(v) && v.length === 7) return v; } catch { /* storage blocked */ } return seedWeek(); });
-  useEffect(() => { try { localStorage.setItem(key, JSON.stringify(plan)); } catch { /* storage blocked */ } }, [key, plan]);
-  const days = plan.map((events, i) => { const d = new Date(start); d.setDate(start.getDate() + i); return { id: String(i), label: DAYS[i], date: d.getDate(), long: d.toLocaleDateString("en", { weekday: "long", day: "numeric", month: "long" }), events: [...events].sort((a, b) => a.time.localeCompare(b.time)) }; });
-  const edit = (i, fn) => setPlan((p) => p.map((l, k) => (k === i ? fn(l) : l)));
+  const [plan, setPlan] = useState(() => {
+    try {
+      const v = JSON.parse(localStorage.getItem(key));
+      if (Array.isArray(v) && v.length === 7) return v;
+    } catch {
+      /* storage blocked */
+    }
+    return seedWeek();
+  });
+  useEffect(() => {
+    try {
+      localStorage.setItem(key, JSON.stringify(plan));
+    } catch {
+      /* storage blocked */
+    }
+  }, [key, plan]);
+  const days = plan.map((events, i) => {
+    const d = new Date(start);
+    d.setDate(start.getDate() + i);
+    return {
+      id: String(i),
+      label: DAYS[i],
+      date: d.getDate(),
+      long: d.toLocaleDateString("en", {
+        weekday: "long",
+        day: "numeric",
+        month: "long",
+      }),
+      events: [...events].sort((a, b) => a.time.localeCompare(b.time)),
+    };
+  });
+  const edit = (i, fn) =>
+    setPlan((p) => p.map((l, k) => (k === i ? fn(l) : l)));
   return {
-    days, today: (new Date().getDay() + 6) % 7,
-    toggle: (ev, done) => plan.forEach((l, i) => l.some((e) => e.id === ev.id) && edit(i, (L) => L.map((e) => (e.id === ev.id ? { ...e, done } : e)))),
-    remove: (ev) => plan.forEach((l, i) => l.some((e) => e.id === ev.id) && edit(i, (L) => L.filter((e) => e.id !== ev.id))),
-    add: (dayId, { time, title }) => edit(Number(dayId), (L) => [...L, { id: `n${Date.now()}`, time, title, meta: "Added by me", tone: "violet", done: false }]),
+    days,
+    today: (new Date().getDay() + 6) % 7,
+    toggle: (ev, done) =>
+      plan.forEach(
+        (l, i) =>
+          l.some((e) => e.id === ev.id) &&
+          edit(i, (L) => L.map((e) => (e.id === ev.id ? { ...e, done } : e))),
+      ),
+    remove: (ev) =>
+      plan.forEach(
+        (l, i) =>
+          l.some((e) => e.id === ev.id) &&
+          edit(i, (L) => L.filter((e) => e.id !== ev.id)),
+      ),
+    add: (dayId, { time, title }) =>
+      edit(Number(dayId), (L) => [
+        ...L,
+        {
+          id: `n${Date.now()}`,
+          time,
+          title,
+          meta: "Added by me",
+          tone: "violet",
+          done: false,
+        },
+      ]),
   };
 }
 
@@ -48,14 +118,28 @@ export default function Coding() {
   const p = cp[a];
   const total = cp.reduce((s, x) => s + solved(x), 0);
   return (
-    <Page id="coding" eyebrow="Coding" title="Problem solving, daily" typed={{ before: "Rated rounds and steady practice across", words: ["four platforms.", "hundreds of problems.", "every single week."] }}>
+    <Page
+      id="coding"
+      eyebrow="Coding"
+      title="Problem solving, daily"
+      typed={{
+        before: "Rated rounds and steady practice across",
+        words: [
+          "four platforms.",
+          "hundreds of problems.",
+          "every single week.",
+        ],
+      }}
+    >
       {/* headline numbers on odometer wheels */}
       <Reveal y={24} scale={1}>
         <dl className="card grid grid-cols-2 divide-ink/10 sm:grid-cols-4 sm:divide-x [&>div:nth-child(n+3)]:border-t [&>div:nth-child(n+3)]:border-ink/10 sm:[&>div:nth-child(n+3)]:border-t-0">
           {stats.map((s) => (
             <div key={s.l} className="px-5 py-6 sm:px-7">
               <dt className="order-2 text-sm text-ink/55">{s.l}</dt>
-              <dd className="mt-1 font-display text-4xl font-extrabold sm:text-5xl"><Odometer to={s.v} suffix={s.s} /></dd>
+              <dd className="mt-1 font-display text-4xl font-extrabold sm:text-5xl">
+                <Odometer to={s.v} suffix={s.s} />
+              </dd>
             </div>
           ))}
         </dl>
@@ -65,18 +149,45 @@ export default function Coding() {
       <Reveal y={24} scale={1} delay={0.05} className="mt-6">
         <div className="card p-6 sm:p-8">
           <div className="flex items-end justify-between gap-4">
-            <h2 className="font-display text-2xl font-semibold">Solved by platform</h2>
-            <p className="font-display text-2xl font-bold"><Odometer to={total} /></p>
+            <h2 className="font-display text-2xl font-semibold">
+              Solved by platform
+            </h2>
+            <p className="font-display text-2xl font-bold">
+              <Odometer to={total} />
+            </p>
           </div>
-          <div className="mt-5 flex h-4 gap-1 overflow-hidden rounded-full" aria-hidden>
-            {cp.map((x, i) => <motion.span key={x.n} className="h-full rounded-full" style={{ background: PLAT[i] }} initial={{ flexGrow: 0 }} whileInView={{ flexGrow: solved(x) }} viewport={{ once: true }} transition={{ duration: 1, delay: 0.1 + i * 0.12, ease: [0.22, 1, 0.36, 1] }} />)}
+          <div
+            className="mt-5 flex h-4 gap-1 overflow-hidden rounded-full"
+            aria-hidden
+          >
+            {cp.map((x, i) => (
+              <motion.span
+                key={x.n}
+                className="h-full rounded-full"
+                style={{ background: PLAT[i] }}
+                initial={{ flexGrow: 0 }}
+                whileInView={{ flexGrow: solved(x) }}
+                viewport={{ once: true }}
+                transition={{
+                  duration: 1,
+                  delay: 0.1 + i * 0.12,
+                  ease: [0.22, 1, 0.36, 1],
+                }}
+              />
+            ))}
           </div>
           <ul className="mt-5 grid grid-cols-2 gap-x-4 gap-y-3 sm:grid-cols-4">
             {cp.map((x, i) => (
               <li key={x.n} className="flex items-center gap-2 text-sm">
-                <span aria-hidden className="h-2.5 w-2.5 shrink-0 rounded-full" style={{ background: PLAT[i] }} />
+                <span
+                  aria-hidden
+                  className="h-2.5 w-2.5 shrink-0 rounded-full"
+                  style={{ background: PLAT[i] }}
+                />
                 <span className="truncate text-ink/60">{x.n}</span>
-                <span className="ml-auto font-semibold tabular-nums">{solved(x)}</span>
+                <span className="ml-auto font-semibold tabular-nums">
+                  {solved(x)}
+                </span>
               </li>
             ))}
           </ul>
@@ -86,32 +197,83 @@ export default function Coding() {
       {/* one platform at a time: ring + breakdown */}
       <Reveal y={24} scale={1} delay={0.05} className="mt-6">
         <div className="card p-4 sm:p-6">
-          <div role="tablist" className="flex gap-1 overflow-x-auto rounded-full bg-ink/[.06] p-1">
+          <div
+            role="tablist"
+            className="flex gap-1 overflow-x-auto rounded-full bg-ink/6 p-1"
+          >
             {cp.map((x, i) => (
-              <button key={x.n} role="tab" aria-selected={a === i} onClick={() => setA(i)} className="relative flex shrink-0 items-center gap-2 rounded-full px-4 py-2.5 text-sm font-semibold">
-                {a === i && <motion.span layoutId="cp-pill" transition={{ type: "spring", stiffness: 420, damping: 32 }} className="absolute inset-0 rounded-full bg-surface shadow-sm" />}
-                <span className={`relative flex items-center gap-2 ${a === i ? "text-ink" : "text-ink/55"}`}><Icon name={x.n} className="h-4 w-4" />{x.n}</span>
+              <button
+                key={x.n}
+                role="tab"
+                aria-selected={a === i}
+                onClick={() => setA(i)}
+                className="relative flex shrink-0 items-center gap-2 rounded-full px-4 py-2.5 text-sm font-semibold"
+              >
+                {a === i && (
+                  <motion.span
+                    layoutId="cp-pill"
+                    transition={{ type: "spring", stiffness: 420, damping: 32 }}
+                    className="absolute inset-0 rounded-full bg-surface shadow-sm"
+                  />
+                )}
+                <span
+                  className={`relative flex items-center gap-2 ${a === i ? "text-ink" : "text-ink/55"}`}
+                >
+                  <Icon name={x.n} className="h-4 w-4" />
+                  {x.n}
+                </span>
               </button>
             ))}
           </div>
-          <motion.div key={p.n} initial={{ opacity: 0, y: 10, filter: "blur(6px)" }} animate={{ opacity: 1, y: 0, filter: "blur(0px)" }} transition={{ duration: 0.35 }} className="grid items-center gap-8 px-2 py-8 sm:px-6 md:grid-cols-[auto_1fr]">
-            <UsageRing key={p.n} segments={LEVEL.map(([, color, k]) => ({ value: p[k], color }))} size={210}>
+          <motion.div
+            key={p.n}
+            initial={{ opacity: 0, y: 10, filter: "blur(6px)" }}
+            animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+            transition={{ duration: 0.35 }}
+            className="grid items-center gap-8 px-2 py-8 sm:px-6 md:grid-cols-[auto_1fr]"
+          >
+            <UsageRing
+              key={p.n}
+              segments={LEVEL.map(([, color, k]) => ({ value: p[k], color }))}
+              size={210}
+            >
               <div>
-                <div className="font-display text-5xl font-extrabold"><Odometer to={solved(p)} /></div>
+                <div className="font-display text-5xl font-extrabold">
+                  <Odometer to={solved(p)} />
+                </div>
                 <div className="text-sm text-ink/55">solved</div>
               </div>
             </UsageRing>
             <div>
-              <a href={p.u} target="_blank" rel="noreferrer" className="inline-flex items-center gap-2 font-display text-2xl font-bold hover:underline"><Icon name={p.n} className="h-6 w-6" />{p.n}<span aria-hidden className="text-lg">↗</span></a>
+              <a
+                href={p.u}
+                target="_blank"
+                rel="noreferrer"
+                className="inline-flex items-center gap-2 font-display text-2xl font-bold hover:underline"
+              >
+                <Icon name={p.n} className="h-6 w-6" />
+                {p.n}
+                <span aria-hidden className="text-lg">
+                  ↗
+                </span>
+              </a>
               <p className="text-sm text-ink/55">@{p.h}</p>
               <div className="mt-4 flex flex-wrap gap-2 text-sm font-semibold">
-                <span className="rounded-full bg-ink/[.07] px-3 py-1">Rating {p.r}</span>
-                <span className="rounded-full bg-ink/[.07] px-3 py-1">{p.rk}</span>
+                <span className="rounded-full bg-ink/[.07] px-3 py-1">
+                  Rating {p.r}
+                </span>
+                <span className="rounded-full bg-ink/[.07] px-3 py-1">
+                  {p.rk}
+                </span>
               </div>
               <ul className="mt-5 space-y-2.5">
                 {LEVEL.map(([label, color, k]) => (
                   <li key={label} className="flex items-center gap-3 text-sm">
-                    <span aria-hidden className="h-3 w-3 rounded-full" style={{ background: color }} />
+                    <span
+                      aria-hidden
+                      className="h-3 w-3 rounded-full"
+                      style={{ background: color }}
+                    />
                     <span className="w-16 text-ink/60">{label}</span>
                     <span className="font-semibold tabular-nums">{p[k]}</span>
                   </li>
@@ -124,15 +286,31 @@ export default function Coding() {
 
       {/* contribution heatmap */}
       <Reveal y={24} scale={1} delay={0.05} className="mt-6">
-        <ActivityGrid title="Contributions" user="Hafiz-Sakib" palette="green" />
+        <ActivityGrid
+          title="Contributions"
+          user="Hafiz-Sakib"
+          palette="green"
+        />
       </Reveal>
 
       {/* weekly practice planner */}
       <Reveal y={24} scale={1} delay={0.05} className="mt-6">
         <div className="card p-3 sm:p-6">
-          <h2 className="px-2 pt-2 font-display text-2xl font-semibold sm:px-0 sm:pt-0">This week's practice</h2>
-          <p className="mb-5 mt-1 px-2 text-sm text-ink/55 sm:px-0">A starter plan. Finish, delete or add tasks; it saves in your browser.</p>
-          <CalendarAgenda title="Planner" days={planner.days} defaultDay={planner.today} onToggle={planner.toggle} onDelete={planner.remove} onAdd={planner.add} />
+          <h2 className="px-2 pt-2 font-display text-2xl font-semibold sm:px-0 sm:pt-0">
+            This week's practice
+          </h2>
+          <p className="mb-5 mt-1 px-2 text-sm text-ink/55 sm:px-0">
+            A starter plan. Finish, delete or add tasks; it saves in your
+            browser.
+          </p>
+          <CalendarAgenda
+            title="Planner"
+            days={planner.days}
+            defaultDay={planner.today}
+            onToggle={planner.toggle}
+            onDelete={planner.remove}
+            onAdd={planner.add}
+          />
         </div>
       </Reveal>
     </Page>
