@@ -5,7 +5,7 @@ import { LuAward, LuCalendarDays, LuCheck } from "react-icons/lu";
 import { SiCoursera, SiHackerrank, SiUdemy } from "react-icons/si";
 import { certs, edu, jobs } from "../about";
 import { LiquidTabs } from "../components/mb/liquid-tabs";
-import { DepthCarousel } from "../components/mb/depth-carousel";
+import { RollingStack } from "../components/mb/rolling-stack";
 import { Reveal } from "../components/folio-ui";
 import Page, { BG } from "./Page";
 
@@ -47,34 +47,34 @@ function CertCard({ c, active }) {
   const Brand = providerIcon[c.o] || LuAward;
   const inner = (
     <>
-      <div className="flex items-center justify-between gap-3">
-        <span className={`inline-flex items-center gap-1.5 rounded-full ${BG[providerTint[c.o] || "lemon"]} px-3 py-1 text-sm font-semibold`}><Brand aria-hidden className="h-3.5 w-3.5" />{c.o}</span>
-        <span className="inline-flex items-center gap-1.5 text-sm font-semibold tabular-nums text-ink/50"><LuCalendarDays aria-hidden className="h-3.5 w-3.5" />{c.p}</span>
-      </div>
-      <h4 className="mt-6 font-display text-2xl font-bold leading-snug">{c.t}</h4>
-      {c.u && <span className="mt-auto inline-flex items-center gap-2 pt-5 text-sm font-semibold text-ink/60">View certificate <FaArrowUpRightFromSquare aria-hidden className="h-3 w-3" /></span>}
+      <span className={`grid h-12 w-12 shrink-0 place-items-center rounded-2xl ${BG[providerTint[c.o] || "lemon"]}`}><Brand aria-hidden className="h-5 w-5" /></span>
+      <span className="min-w-0 flex-1">
+        <span className="block truncate font-display text-base font-bold leading-tight sm:text-lg">{c.t}</span>
+        <span className="mt-0.5 flex items-center gap-2 text-sm text-ink/55"><span className="truncate">{c.o}</span><span aria-hidden>·</span><span className="inline-flex items-center gap-1 tabular-nums"><LuCalendarDays aria-hidden className="h-3.5 w-3.5" />{c.p}</span></span>
+      </span>
+      {c.u && active && <FaArrowUpRightFromSquare aria-label="View certificate" className="h-3.5 w-3.5 shrink-0 text-ink/60" />}
     </>
   );
-  const cls = "card flex h-full flex-col p-6 sm:p-7";
+  const cls = "card flex h-full items-center gap-4 px-5";
   return c.u && active ? <a href={c.u} target="_blank" rel="noreferrer" className={cls}>{inner}</a> : <div className={cls}>{inner}</div>;
 }
 
 const TABS = [
   { id: "edu", label: "Education", icon: FaGraduationCap },
-  { id: "exp", label: "Experience", icon: FaBriefcase },
   { id: "cert", label: "Certificates", icon: FaAward },
+  { id: "exp", label: "Experience", icon: FaBriefcase },
 ];
 
 export default function Journey() {
   const [tab, setTab] = useState("edu");
   return (
-    <Page id="journey" eyebrow="Journey" title="Where I've been" typed={{ before: "One scroll through my", words: ["studies.", "experience.", "certificates."] }}>
+    <Page id="journey" eyebrow="Journey" title="Where I've been" typed={{ before: "One scroll through my", words: ["studies.", "certificates.", "experience."] }}>
       <Reveal y={24} scale={1}>
         <LiquidTabs tabs={TABS} value={tab} onChange={setTab}>
           <motion.div key={tab} initial={{ opacity: 0, y: 10, filter: "blur(6px)" }} animate={{ opacity: 1, y: 0, filter: "blur(0px)" }} transition={{ duration: 0.35 }}>
             {tab === "edu" && <Steps items={edu} />}
             {tab === "exp" && <Steps items={jobs} />}
-            {tab === "cert" && <DepthCarousel items={certs} label="Certificates" cardHeight={236} renderCard={(c, active) => <CertCard c={c} active={active} />} />}
+            {tab === "cert" && <RollingStack items={certs} label="Certificates" cardHeight={104} renderCard={(c, active) => <CertCard c={c} active={active} />} />}
           </motion.div>
         </LiquidTabs>
       </Reveal>

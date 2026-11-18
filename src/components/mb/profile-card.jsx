@@ -21,7 +21,7 @@ export function ProfileCard({ img, name, line, place, children, className = "" }
         <Blob mx={mx} my={my} f={40} className="bottom-[-3rem] left-1/3 h-40 w-52 bg-mint" />
       </div>
       <div className="px-4 pb-4 sm:px-5">
-        <img src={img} alt={name} className="-mt-14 h-28 w-28 rounded-[2rem] object-cover shadow-xl ring-4 ring-surface sm:-mt-16 sm:h-32 sm:w-32" />
+        <img src={img} alt={name} className="relative z-10 -mt-14 h-28 w-28 rounded-full object-cover object-top shadow-xl ring-4 ring-surface sm:-mt-16 sm:h-32 sm:w-32" />
         <h2 className="mt-4 font-display text-3xl font-bold">{name}</h2>
         {line && <p className="mt-1 text-ink/60">{line}</p>}
         {place && <p className="mt-0.5 text-sm text-ink/45">{place}</p>}
