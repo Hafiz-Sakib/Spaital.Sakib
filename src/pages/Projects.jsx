@@ -6,7 +6,8 @@ import { TiltCarousel } from "../components/tilt-carousel";
 import { Icon } from "../components/icons";
 import { useMedia } from "../hooks/useMedia";
 import { useDark } from "../theme";
-import Page, { BG, Reveal } from "./Page";
+import { Reveal } from "../components/folio-ui";
+import Page, { BG } from "./Page";
 
 const link = "underline decoration-ink/30 underline-offset-4 hover:decoration-ink";
 
@@ -18,18 +19,18 @@ export default function Projects() {
   const tiny = useMedia("(max-width: 359px)");
   const tablet = useMedia("(min-width: 640px) and (max-width: 1023px)");
   // Desktop / tablet: 3D ribbon. Phones: tilt carousel (sharper, lighter).
-  const size = tablet ? { w: 380, h: 250, drift: 55, blur: 8, cls: "h-[520px]" } : { w: 460, h: 300, drift: 70, blur: 20, cls: "h-[68vh] max-h-[700px] min-h-[480px]" };
+  const size = tablet ? { w: 380, h: 250, drift: 55, blur: 8, slices: 24, cls: "h-[560px]" } : { w: 480, h: 310, drift: 70, blur: 20, slices: 20, cls: "h-[78vh] max-h-[820px] min-h-[520px]" };
   const items = useMemo(() => work.map((x) => ({ src: `/work/${x.img}.webp`, hd: `/work/${x.img}-hd.webp`, title: x.title, alt: `${x.title} screenshot`, href: x.live, w: x.w, h: x.h })), []);
 
   return (
     <Page id="projects" eyebrow="Projects" title="Things I've shipped" sub="Ten projects, from offline learning apps to full-stack platforms. Drag the ribbon, then hover or tap a screenshot to see the project.">
-      <Reveal>
+      <Reveal scale={0.94} y={50}>
         <div className="card overflow-hidden p-3">
           <div className="overflow-hidden rounded-[1.4rem] bg-mist">
             {phone ? (
               <TiltCarousel items={items} onActive={setA} cardWidth={tiny ? 230 : 270} cardHeight={tiny ? 150 : 175} speed={3} delay={1.5} label="Project screenshot carousel" className="py-6" />
             ) : (
-              <RibbonGallery items={items} onActive={setA} angle={-10} blur={size.blur} drift={size.drift} wave={1} slices={20} momentum={0.8} cardWidth={size.w} cardHeight={size.h} wheel={false} dimColor={dark ? "rgb(14 15 26)" : "rgb(243 244 247)"} label="Project screenshot ribbon" className={size.cls} />
+              <RibbonGallery items={items} onActive={setA} angle={-10} blur={size.blur} drift={size.drift} wave={1} slices={size.slices} momentum={0.8} cardWidth={size.w} cardHeight={size.h} wheel={false} dimColor={dark ? "rgb(14 15 26)" : "rgb(243 244 247)"} label="Project screenshot ribbon" className={size.cls} />
             )}
           </div>
           <AnimatePresence mode="wait">

@@ -4,8 +4,8 @@
  * Ported to plain JSX for this Vite + Tailwind project (used as the mobile bottom nav and, via ICONS, in the desktop side dock):
  *  - framer-motion (already installed) instead of motion/react
  *  - no clsx / tailwind-merge (small cn() helper below)
- *  - only the animated icons this site uses (lucide paths, MIT): image, layout-grid, code, cpu, graduation-cap, mail
- *  - up to 6 tabs; inactive icons shrink a little on very narrow phones so the bar always fits
+ *  - only the animated icons this site uses (lucide paths, MIT): image, user, layout-grid, code, cpu, graduation-cap, mail
+ *  - up to 7 tabs; inactive icons shrink a little on very narrow phones so the bar always fits
  *
  * Variants: "pill" (default) | "labels" | "action". A tap bounces the tab, plays its icon and sends a ripple.
  */
@@ -131,6 +131,18 @@ function TrophyIcon({ active, className, strokeWidth }) {
   );
 }
 
+/* About: person, the head nods and the shoulders settle */
+function UserIcon({ active, className, strokeWidth }) {
+  const c = useIcon(active);
+  return (
+    <Shell className={className} strokeWidth={strokeWidth}>
+      <motion.circle animate={c} cx="12" cy="8" r="5" style={{ transformBox: "fill-box", transformOrigin: "center" }} transition={{ duration: 0.5, ease: "easeInOut" }}
+        variants={{ normal: { y: 0, scale: 1 }, animate: { y: [0, -2, 0], scale: [1, 1.12, 1] } }} />
+      <path d="M20 21a8 8 0 0 0-16 0" />
+    </Shell>
+  );
+}
+
 /* Contact: envelope, the flap redraws */
 function MailIcon({ active, className, strokeWidth }) {
   const c = useIcon(active);
@@ -152,14 +164,14 @@ function PlusIcon({ className, strokeWidth }) {
 }
 
 /* tab.icon -> component */
-export const ICONS = { home: HomeIcon, photos: ImageIcon, projects: GridIcon, coding: CodeIcon, skills: CpuIcon, journey: CapIcon, contests: TrophyIcon, contact: MailIcon };
+export const ICONS = { home: HomeIcon, photos: ImageIcon, about: UserIcon, projects: GridIcon, coding: CodeIcon, skills: CpuIcon, journey: CapIcon, contests: TrophyIcon, contact: MailIcon };
 
 const GLIDE = [0.22, 1, 0.36, 1];
 const SPRING = { type: "spring", stiffness: 500, damping: 34 };
 const POP = { type: "spring", stiffness: 600, damping: 26 };
 
 /**
- * tabs: [{ id, label, icon: "photos"|"projects"|"skills"|"journey"|"coding"|"contact", badge? }]
+ * tabs: [{ id, label, icon: "photos"|"about"|"projects"|"skills"|"journey"|"coding"|"contact", badge? }]
  * variant: "pill" | "labels" | "action"
  */
 export const TabBar = React.forwardRef(function TabBar(
@@ -172,8 +184,9 @@ export const TabBar = React.forwardRef(function TabBar(
   React.useImperativeHandle(ref, () => root.current);
   const seen = useInView(root, { once: true, amount: 0.4 });
   const shown = seen || still;
-  const list = variant === "action" ? tabs.slice(0, 4) : tabs.slice(0, 6);
+  const list = variant === "action" ? tabs.slice(0, 4) : tabs.slice(0, 7);
   const crowded = list.length > 5;
+  const packed = list.length > 6; // 7 tabs: inactive icons get a little narrower so the pill still fits in 380px
   const [own, setOwn] = React.useState(defaultValue ?? list[0]?.id ?? "");
   const current = value ?? own;
   const [playing, setPlaying] = React.useState(null);
@@ -223,7 +236,7 @@ export const TabBar = React.forwardRef(function TabBar(
         className={cn(
           "group relative flex cursor-pointer select-none items-center justify-center outline-none [-webkit-tap-highlight-color:transparent] focus-visible:ring-2 focus-visible:ring-ink/30",
           pill ? "h-12 rounded-full" : iconOnly ? "h-12 flex-1 rounded-2xl" : "h-14 min-w-0 flex-1 flex-col gap-1 rounded-2xl",
-          pill && (on ? "gap-1.5 pl-3 pr-4 min-[380px]:gap-2 min-[380px]:pl-4 min-[380px]:pr-5" : crowded ? "w-9 min-[360px]:w-10 min-[400px]:w-12" : "w-12"),
+          pill && (on ? (packed ? "gap-1.5 pl-3 pr-3.5 min-[380px]:pl-3.5 min-[380px]:pr-4" : "gap-1.5 pl-3 pr-4 min-[380px]:gap-2 min-[380px]:pl-4 min-[380px]:pr-5") : packed ? "w-8 min-[360px]:w-[34px] min-[400px]:w-9" : crowded ? "w-9 min-[360px]:w-10 min-[400px]:w-12" : "w-12"),
         )}
       >
         {pill && on && (

@@ -3,7 +3,7 @@ import { PAGES, href } from "../router";
 import { ICONS, TabBar } from "./TabBar";
 
 /* One entry per page. `icon` is a key of ICONS in TabBar.jsx (animated lucide icons from motion-brew). */
-const ICON = { home: "photos", projects: "projects", skills: "skills", journey: "journey", coding: "coding", contact: "contact" };
+const ICON = { home: "photos", about: "about", projects: "projects", skills: "skills", journey: "journey", coding: "coding", contact: "contact" };
 const ITEMS = [{ id: "home", label: "Photos" }, ...PAGES].map((x) => ({ ...x, icon: ICON[x.id] }));
 
 /* Desktop: a vertical glass dock on the right edge, vertically centred. Icons only; the label slides out on hover / focus. */
