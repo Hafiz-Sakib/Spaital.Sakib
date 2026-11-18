@@ -65,7 +65,12 @@ export default function App() {
           <SpatialGallery className="h-full w-full" items={tunnel} count={110} radius={3.6} scrollSpeed={2.5} twist={0.35} roll={0.15} linkTarget="_blank">
             <div className="pointer-events-none absolute inset-x-0 bottom-0 h-72 bg-gradient-to-t from-mist via-mist/70 to-transparent" />
             <div className="pointer-events-none absolute bottom-24 left-5 max-w-[80%] sm:left-10 lg:bottom-10">
-              <h1 className="font-display text-5xl font-semibold leading-[.95] sm:text-7xl"><BackspaceText words={[site.name]} typeSpeed={90} deleteSpeed={45} hold={3500} caretClassName="text-violet-500" /><span className="bg-gradient-to-r from-violet-500 to-pink-500 bg-clip-text text-transparent">.</span></h1>
+              <h1 className="font-display font-semibold leading-[1]" aria-label={`Hi, I'm ${site.name}. ${site.tagline}`}>
+                <span aria-hidden className="block text-2xl text-ink/50 sm:text-3xl">Hi, I'm</span>
+                <span aria-hidden className="mt-1 block text-ink min-h-[2.1em] text-5xl sm:min-h-[1.1em] sm:text-7xl">
+                  <BackspaceText words={[["", site.name], ["a ", "full-stack dev"], ["a ", "problem solver"], ["an ", "NLP researcher"]]} typeSpeed={80} deleteSpeed={38} hold={2200} keyClassName="bg-gradient-to-r from-violet-500 via-fuchsia-500 to-pink-500 bg-clip-text text-transparent" caretClassName="text-violet-500" />
+                </span>
+              </h1>
               <p className="mt-3 max-w-md text-ink/65">{site.tagline}</p>
             </div>
             <p className="pointer-events-none absolute bottom-10 right-10 hidden text-sm text-ink/55 lg:block">Scroll · drag · hover</p>
