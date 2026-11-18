@@ -4,6 +4,7 @@ import { site } from "./site";
 import ThemeToggle from "./components/ThemeToggle";
 import InstallButton from "./components/InstallButton";
 import { SideNav, BottomNav } from "./components/NavMenu";
+import { BackspaceText } from "./components/backspace-text";
 import { useRoute } from "./router";
 
 const PAGE = {
@@ -64,8 +65,7 @@ export default function App() {
           <SpatialGallery className="h-full w-full" items={tunnel} count={110} radius={3.6} scrollSpeed={2.5} twist={0.35} roll={0.15} linkTarget="_blank">
             <div className="pointer-events-none absolute inset-x-0 bottom-0 h-72 bg-gradient-to-t from-mist via-mist/70 to-transparent" />
             <div className="pointer-events-none absolute bottom-24 left-5 max-w-[80%] sm:left-10 lg:bottom-10">
-              <p className="mb-3 inline-block rounded-full bg-ink/10 px-3 py-1 text-xs font-semibold tracking-wide text-ink/70">{images.length} photos</p>
-              <h1 className="font-display text-5xl font-semibold leading-[.95] sm:text-7xl">{site.name}<span className="bg-gradient-to-r from-violet-500 to-pink-500 bg-clip-text text-transparent">.</span></h1>
+              <h1 className="font-display text-5xl font-semibold leading-[.95] sm:text-7xl"><BackspaceText words={[site.name]} typeSpeed={90} deleteSpeed={45} hold={3500} caretClassName="text-violet-500" /><span className="bg-gradient-to-r from-violet-500 to-pink-500 bg-clip-text text-transparent">.</span></h1>
               <p className="mt-3 max-w-md text-ink/65">{site.tagline}</p>
             </div>
             <p className="pointer-events-none absolute bottom-10 right-10 hidden text-sm text-ink/55 lg:block">Scroll · drag · hover</p>
