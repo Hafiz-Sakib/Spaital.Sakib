@@ -38,13 +38,29 @@ h1, h2, h3 { font-family: var(--font-display); letter-spacing: -0.02em; }
     radial-gradient(48rem 32rem at 100% 105%, rgba(56,189,248,.08), transparent 60%);
 }
 
-/* Day / night switch: the new theme is revealed by an expanding circle (clip-path set in theme.js) */
+/* Day / night switch: night grows out of the button, day shrinks back into it (set up in theme.js) */
 ::view-transition-old(root), ::view-transition-new(root) { animation: none; mix-blend-mode: normal; }
 ::view-transition-old(root) { z-index: 1; }
 ::view-transition-new(root) { z-index: 2; }
-/* Fallback for browsers without View Transitions: colours ease instead */
+/* Both directions animate the OLD snapshot (a still image) while the live new page sits underneath - keeps it smooth */
+:root[data-theme-switch]::view-transition-old(root) { z-index: 2; }
+:root[data-theme-switch]::view-transition-new(root) { z-index: 1; }
+/* To night: a hole grows out of the button in the day snapshot, revealing night underneath */
+@property --vt-r { syntax: "<length>"; inherits: false; initial-value: 0px; }
+@keyframes vt-hole { from { --vt-r: 0px; } to { --vt-r: var(--vt-reach); } }
+:root[data-theme-switch="to-dark"]::view-transition-old(root) {
+  -webkit-mask-image: radial-gradient(circle at var(--vt-x) var(--vt-y), transparent var(--vt-r), #000 calc(var(--vt-r) + 1.5px));
+  mask-image: radial-gradient(circle at var(--vt-x) var(--vt-y), transparent var(--vt-r), #000 calc(var(--vt-r) + 1.5px));
+  animation: vt-hole var(--vt-ms) var(--vt-ease) both;
+}
+/* To day: the night snapshot closes into the button */
+@keyframes vt-close {
+  from { clip-path: circle(var(--vt-reach) at var(--vt-x) var(--vt-y)); }
+  to   { clip-path: circle(0px at var(--vt-x) var(--vt-y)); }
+}
+:root[data-theme-switch="to-light"]::view-transition-old(root) { animation: vt-close var(--vt-ms) var(--vt-ease) both; }
 .theme-fade, .theme-fade *, .theme-fade *::before, .theme-fade *::after {
-  transition: background-color .45s ease, color .45s ease, border-color .45s ease, fill .45s ease, stroke .45s ease, box-shadow .45s ease !important;
+  transition: background-color 1s ease, color 1s ease, border-color 1s ease, fill 1s ease, stroke 1s ease, box-shadow 1s ease !important;
 }
 
 /* Frosted glass used by the floating bar, dock and About panel */
