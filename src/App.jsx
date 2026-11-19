@@ -123,18 +123,10 @@ export default function App() {
             className="h-full w-full"
             items={tunnel}
             // ─── Auto Movement ─────────────────────
-            speed={1.4} // Auto speed: 0, 0.5, 0.8, 1.4, 2.0
+            speed={1.4} // Auto speed: higher = faster
             autoMove={true} // Auto move: true / false
-            /*
-            speed={0}    // No auto movement
-            speed={0.5}  // Slow
-            speed={0.8}  // Normal
-            speed={1.4}  // Fast
-            speed={2.0}  // Faster
-            */
-
             // ─── Scroll ────────────────────────────
-            scrollSpeed={2.1} // Scroll speed: 0.5, 1.0, 2.1, 3.0, 5.0
+            scrollSpeed={2.1} // Scroll sensitivity: higher = faster
             captureScroll={true} // Capture scroll: true / false
             followPageScroll={true} // Follow page scroll: true / false
             // ─── Spiral ────────────────────────────
@@ -145,15 +137,15 @@ export default function App() {
             funnel={0.78} // Funnel lean: 0 (none) → 1 (maximum)
             // ─── Layout ────────────────────────────
             count={124} // Planes: 8 – 160
-            radius={4.1} // Tunnel radius: 2.0, 3.0, 4.1, 5.0, 6.0
+            radius={4.1} // Tunnel radius: higher = wider
             core={0.8} // Hollow core: 0 → 0.95
-            spacing={0.2} // Depth spacing: 0.10, 0.20, 0.30, 0.50
-            size={1.45} // Plane size: 0.5, 0.95, 1.2, 1.45, 2.0
+            spacing={0.2} // Depth spacing: higher = more distance
+            size={1.45} // Plane size: higher = larger images
             // ─── Appearance ────────────────────────
-            roll={0.0} // Roll: 0 (none) → 1 (maximum)
+            roll={0.0} // Roll: 0 = no rotation, higher = more rotation
             corner={0.22} // Corner radius: 0 (square) → 0.5 (round)
             parallax={0.5} // Parallax: 0 (none) → 1 (maximum)
-            fog={0.8} // Fog: 0 (none) → 1 (maximum fade)
+            fog={0.4} // Fog: 0 (none) → 1 (maximum fade)
             // ─── Interaction ───────────────────────
             drag={true} // Drag to travel: true / false
             caption={false} // Caption: true / false
