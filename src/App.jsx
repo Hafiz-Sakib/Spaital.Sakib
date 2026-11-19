@@ -14,6 +14,7 @@ const PAGE = {
   journey: lazy(() => import("./pages/Journey")),
   coding: lazy(() => import("./pages/Coding")),
   contact: lazy(() => import("./pages/Contact")),
+  notfound: lazy(() => import("./pages/NotFound")),
 };
 
 // three.js / gsap are only downloaded when the landing page opens.

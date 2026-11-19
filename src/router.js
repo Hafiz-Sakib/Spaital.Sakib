@@ -31,7 +31,9 @@ const read = () => {
   const id = idFromPath(
     typeof location === "undefined" ? "" : location.pathname,
   );
-  return PAGES.some((p) => p.id === id) ? id : "home";
+  if (PAGES.some((p) => p.id === id)) return id;
+  // "/" (and /index.html) is the landing page; any other unknown path is the 404 page
+  return id === "" || id === "index.html" ? "home" : "notfound";
 };
 const subscribe = (cb) => {
   window.addEventListener("popstate", cb);
@@ -42,7 +44,7 @@ const subscribe = (cb) => {
   };
 };
 
-/** const route = useRoute(); -> "home" | "about" | "projects" | "skills" | "journey" | "coding" | "contact" */
+/** const route = useRoute(); -> "home" | "about" | "projects" | "skills" | "journey" | "coding" | "contact" | "notfound" */
 export const useRoute = () =>
   useSyncExternalStore(subscribe, read, () => "home");
 export const href = (id) => (id === "home" ? `${BASE}/` : `${BASE}/${id}`);

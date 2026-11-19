@@ -7,7 +7,6 @@
  */
 import * as React from "react";
 import gsap from "gsap";
-s;
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 
 const cn = (...a) => a.filter(Boolean).join(" ");
@@ -181,7 +180,6 @@ export const BellToggle = React.forwardRef(function BellToggle(
           className="size-4.5 overflow-visible"
           fill="none"
           stroke="currentColor"
-          s
           strokeWidth="1.9"
           strokeLinecap="round"
           strokeLinejoin="round"
