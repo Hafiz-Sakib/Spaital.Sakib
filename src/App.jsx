@@ -122,12 +122,35 @@ export default function App() {
           <SpatialGallery
             className="h-full w-full"
             items={tunnel}
-            count={110}
-            radius={3.6}
-            scrollSpeed={2.5}
-            twist={0.35}
-            roll={0.15}
-            linkTarget="_blank"
+            // ─── Auto Movement ─────────────────────
+            speed={1.4} // Auto speed: 0, 0.5, 0.8, 1.4, 2.0
+            autoMove={true} // Auto move: true / false
+            // ─── Scroll ────────────────────────────
+            scrollSpeed={2.1} // Scroll speed: 0.5, 1.0, 2.1, 3.0, 5.0
+            captureScroll={true} // Capture scroll: true / false
+            followPageScroll={true} // Follow page scroll: true / false
+            // ─── Spiral ────────────────────────────
+            spiral={true} // Spiral: true / false
+            twist={0.3} // Twist: 0 (none) → 1 (maximum)
+            // ─── Facing ────────────────────────────
+            facing="funnel" // Facing: "front" / "funnel"
+            funnel={0.78} // Funnel lean: 0 (none) → 1 (maximum)
+            // ─── Layout ────────────────────────────
+            count={124} // Planes: 8 – 160
+            radius={4.1} // Tunnel radius: 2.0, 3.0, 4.1, 5.0, 6.0
+            core={0.8} // Hollow core: 0 → 0.95
+            spacing={0.2} // Depth spacing: 0.10, 0.20, 0.30, 0.50
+            size={1.45} // Plane size: 0.5, 0.95, 1.2, 1.45, 2.0
+            // ─── Appearance ────────────────────────
+            roll={0.0} // Roll: 0 (none) → 1 (maximum)
+            corner={0.22} // Corner radius: 0 (square) → 0.5 (round)
+            parallax={0.5} // Parallax: 0 (none) → 1 (maximum)
+            fog={0.8} // Fog: 0 (none) → 1 (maximum fade)
+            // ─── Interaction ───────────────────────
+            drag={true} // Drag to travel: true / false
+            caption={false} // Caption: true / false
+            // ─── Links ─────────────────────────────
+            linkTarget="_blank" // Link target: "_blank" / "_self"
           >
             <div className="pointer-events-none absolute inset-x-0 bottom-0 h-72 bg-linear-to-t from-mist via-mist/70 to-transparent" />
             <div className="pointer-events-none absolute bottom-24 left-5 max-w-[80%] sm:left-10 lg:bottom-10">
