@@ -145,7 +145,7 @@ export default function App() {
             roll={0.0} // Roll: 0 = no rotation, higher = more rotation
             corner={0.22} // Corner radius: 0 (square) → 0.5 (round)
             parallax={0.5} // Parallax: 0 (none) → 1 (maximum)
-            fog={0.4} // Fog: 0 (none) → 1 (maximum fade)
+            fog={0.5} // Fog: 0 (none) → 1 (maximum fade)
             // ─── Interaction ───────────────────────
             drag={true} // Drag to travel: true / false
             caption={false} // Caption: true / false
