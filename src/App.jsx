@@ -123,7 +123,7 @@ export default function App() {
             className="h-full w-full"
             items={tunnel}
             // ─── Auto Movement ─────────────────────
-            speed={1.7} // Auto speed: 0, 0.5, 0.8, 1.4, 2.0
+            speed={1.4} // Auto speed: 0, 0.5, 0.8, 1.4, 2.0
             autoMove={true} // Auto move: true / false
             /*
             speed={0}    // No auto movement
