@@ -2,6 +2,30 @@
 export const stats = [{"v":647,"s":"","l":"Codeforces problems"},{"v":1574,"s":"","l":"LeetCode rating"},{"v":10,"s":"","l":"Projects shipped"},{"v":4,"s":"+","l":"Years building"}];
 export const work = [
  {
+  "img": "number-system",
+  "c": "mint",
+  "tags": ["React", "Vite", "Tailwind", "Three.js", "PWA"],
+  "title": "Number System",
+  "kind": "Interactive learning app",
+  "desc": "HSC ICT study companion covering number conversion, complements, Boolean algebra and logic gates, with step-by-step solutions and an offline-ready PWA.",
+  "live": "https://ictlogic.vercel.app/",
+  "gh": "https://github.com/Hafiz-Sakib/Number-System",
+  "w": 1600,
+  "h": 774
+ },
+ {
+  "img": "nikah",
+  "c": "peach",
+  "tags": ["React", "Node.js", "Express", "Supabase"],
+  "title": "Nikah Community Center",
+  "kind": "Booking platform",
+  "desc": "Full-stack booking system for a Chattogram wedding venue with live availability, advance payments, PDF invoices and an admin dashboard.",
+  "live": "https://nikah-convention.vercel.app/",
+  "gh": "https://github.com/Hafiz-Sakib/Nikah-Community-Center",
+  "w": 1600,
+  "h": 780
+ },
+ {
   "img": "cp-pathshala",
   "c": "lilac",
   "tags": ["React", "Vite", "PWA", "Python", "C++"],
