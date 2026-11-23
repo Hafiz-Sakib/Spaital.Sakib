@@ -1,5 +1,5 @@
 /* ExpandList (motion-brew style): every row starts expanded; click a row to collapse / expand it again.
-   items: [{ id, icon, tint, title, meta, detail, href?, cta?, outline? }]  (outline = secondary-looking link button) */
+   items: [{ id, icon, tint, title, meta, detail, body?, href?, cta?, outline? }]  (outline = secondary-looking link button) */
 import { useState } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 
@@ -27,7 +27,7 @@ export function ExpandList({ items, className = "" }) {
               {open && (
                 <motion.div initial={still ? false : { height: 0, opacity: 0 }} animate={{ height: "auto", opacity: 1 }} exit={{ height: 0, opacity: 0 }} transition={{ duration: 0.25 }} className="overflow-hidden">
                   <div className="flex flex-wrap items-center justify-between gap-3 px-4 pb-4 pl-[4.75rem] sm:px-5 sm:pl-[5.75rem]">
-                    <p className="text-sm text-ink/65">{it.detail}</p>
+                    {it.body ?? <p className="text-sm text-ink/65">{it.detail}</p>}
                     {it.href && <a href={it.href} target="_blank" rel="noreferrer" className={`inline-flex items-center gap-2 rounded-full border-[1.5px] px-4 py-2 text-sm font-semibold transition ${it.outline ? "border-ink/35 bg-surface text-ink hover:border-ink/60 hover:bg-mist" : "border-ink bg-ink text-mist hover:bg-ink/85"}`}>{it.cta || "Open"} <span aria-hidden>↗</span></a>}
                   </div>
                 </motion.div>

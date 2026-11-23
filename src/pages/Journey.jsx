@@ -137,13 +137,25 @@ function Pubs() {
   const items = pubs.map((x, i) => ({
     id: `${i}-${x.t}`,
     title: x.t,
-    meta: `${x.c} · ${x.o} · ${x.p} · ${x.s}`,
+    meta: `${x.c} · ${x.o} · ${x.s}`,
     tint: BG.lemon,
     icon: <FaFileLines aria-hidden className="h-5 w-5" />,
-    detail: `${x.d} ${x.v} (${x.o}), Paper ID ${x.id}. ${x.w}. ${x.n}`,
     href: x.u,
     cta: "View conference",
     outline: true,
+    body: (
+      <div className="w-full">
+        <p className="max-w-2xl text-sm leading-7 text-ink/70">{x.d}</p>
+        <ul className="mt-3 space-y-1.5 text-sm leading-6 text-ink/50">
+          <li className="font-semibold text-ink/75">
+            {x.v} · Paper ID {x.id}
+          </li>
+          <li>
+            {x.venue} · {x.date} · {x.mode}
+          </li>
+        </ul>
+      </div>
+    ),
   }));
   return <ExpandList items={items} />;
 }
