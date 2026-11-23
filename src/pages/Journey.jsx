@@ -1,10 +1,9 @@
-import { useRef, useState } from "react";
+import { useRef } from "react";
 import { motion, useReducedMotion, useScroll, useSpring } from "framer-motion";
 import { FaAward, FaBriefcase, FaFileLines, FaGraduationCap } from "react-icons/fa6";
 import { LuAward, LuCheck } from "react-icons/lu";
 import { SiCoursera, SiHackerrank, SiUdemy } from "react-icons/si";
 import { certs, edu, jobs, pubs } from "../about";
-import { LiquidTabs } from "../components/mb/liquid-tabs";
 import { ExpandList } from "../components/mb/cert-list";
 import { Reveal } from "../components/folio-ui";
 import Page, { BG } from "./Page";
@@ -149,15 +148,15 @@ function Pubs() {
   return <ExpandList items={items} />;
 }
 
-const TABS = [
-  { id: "edu", label: "Education", icon: FaGraduationCap },
-  { id: "cert", label: "Certificates", icon: FaAward },
-  { id: "pub", label: "Papers", icon: FaFileLines },
-  { id: "exp", label: "Experience", icon: FaBriefcase },
+const SECTIONS = [
+  { id: "edu", label: "Education", icon: FaGraduationCap, body: () => <Steps items={edu} /> },
+  { id: "pub", label: "Journal & Publication", icon: FaFileLines, body: () => <Pubs /> },
+  { id: "cert", label: "Certificates & Courses", icon: FaAward, body: () => <Certs /> },
+  { id: "exp", label: "Experience", icon: FaBriefcase, body: () => <Steps items={jobs} /> },
 ];
 
+/* All four sections one after another (no tabs), each one fully expanded. */
 export default function Journey() {
-  const [tab, setTab] = useState("edu");
   return (
     <Page
       id="journey"
@@ -165,24 +164,27 @@ export default function Journey() {
       title="Where I've been"
       typed={{
         before: "One scroll through my",
-        words: ["studies.", "certificates.", "research.", "experience."],
+        words: ["studies.", "research.", "certificates.", "experience."],
       }}
     >
-      <Reveal y={24} scale={1}>
-        <LiquidTabs tabs={TABS} value={tab} onChange={setTab}>
-          <motion.div
-            key={tab}
-            initial={{ opacity: 0, y: 10, filter: "blur(6px)" }}
-            animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-            transition={{ duration: 0.35 }}
-          >
-            {tab === "edu" && <Steps items={edu} />}
-            {tab === "exp" && <Steps items={jobs} />}
-            {tab === "cert" && <Certs />}
-            {tab === "pub" && <Pubs />}
-          </motion.div>
-        </LiquidTabs>
-      </Reveal>
+      <div className="space-y-12 sm:space-y-16">
+        {SECTIONS.map(({ id, label, icon: Icon, body }) => (
+          <section key={id} id={id} aria-labelledby={`${id}-h`}>
+            <Reveal y={24} scale={1}>
+              <h2
+                id={`${id}-h`}
+                className="mb-4 flex items-center gap-2.5 px-1 font-display text-xl font-bold sm:text-2xl"
+              >
+                <Icon aria-hidden className="h-5 w-5 text-ink/60" />
+                {label}
+              </h2>
+              <div className="rounded-[2rem] bg-surface p-5 shadow-[0_12px_40px_-12px_rgba(20,21,26,.12)] sm:p-8">
+                {body()}
+              </div>
+            </Reveal>
+          </section>
+        ))}
+      </div>
     </Page>
   );
 }

@@ -1,21 +1,20 @@
-/* ExpandList (motion-brew "hover expand" style): every row is visible at once as a compact line;
-   hover, focus or tap a row and it opens to show the details while the others dim.
+/* ExpandList (motion-brew style): every row starts expanded; click a row to collapse / expand it again.
    items: [{ id, icon, tint, title, meta, detail, href?, cta?, outline? }]  (outline = secondary-looking link button) */
 import { useState } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 
 export function ExpandList({ items, className = "" }) {
   const still = !!useReducedMotion();
-  const [on, setOn] = useState(null);
+  const [closed, setClosed] = useState(() => new Set());
+  const toggle = (id) => setClosed((s) => { const n = new Set(s); n.has(id) ? n.delete(id) : n.add(id); return n; });
   return (
-    <ul className={`space-y-2 ${className}`} onMouseLeave={() => setOn(null)}>
+    <ul className={`space-y-2 ${className}`}>
       {items.map((it, i) => {
-        const open = on === it.id;
-        const dim = on !== null && !open;
+        const open = !closed.has(it.id);
         return (
-          <motion.li key={it.id} layout={!still} transition={{ type: "spring", stiffness: 360, damping: 34 }} animate={{ opacity: dim ? 0.45 : 1 }}
+          <motion.li key={it.id} layout={!still} transition={{ type: "spring", stiffness: 360, damping: 34 }}
             className={`overflow-hidden rounded-[1.4rem] ring-1 transition-colors ${open ? "bg-mist ring-ink/10" : "bg-ink/[.035] ring-transparent"}`}>
-            <button onMouseEnter={() => setOn(it.id)} onFocus={() => setOn(it.id)} onClick={() => setOn(open ? null : it.id)} aria-expanded={open} className="flex w-full items-center gap-4 px-4 py-3.5 text-left sm:px-5">
+            <button onClick={() => toggle(it.id)} aria-expanded={open} className="flex w-full items-center gap-4 px-4 py-3.5 text-left sm:px-5">
               <span className="w-5 shrink-0 text-sm font-semibold tabular-nums text-ink/35">{i + 1}</span>
               <span className={`grid h-11 w-11 shrink-0 place-items-center rounded-2xl ${it.tint}`}>{it.icon}</span>
               <span className="min-w-0 flex-1">

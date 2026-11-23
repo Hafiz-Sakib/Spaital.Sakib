@@ -5,7 +5,7 @@ export const site = {
   full: "Mohammad Hafizur Rahman Sakib",
   tagline: "Full-stack developer · Competitive programmer · NLP researcher",
   place: "Chattogram, Bangladesh",
-  bio: "CSE student at Premier University who builds full-stack web apps with clean UI and solid architecture.",
+  bio: "CSE graduate from Premier University who builds full-stack web apps with clean UI and solid architecture.",
   email: "hafizsakib5@gmail.com",
   social: [
     { name: "GitHub", href: "https://github.com/Hafiz-Sakib" },
