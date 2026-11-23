@@ -1,9 +1,9 @@
 import { useRef, useState } from "react";
 import { motion, useReducedMotion, useScroll, useSpring } from "framer-motion";
-import { FaAward, FaBriefcase, FaGraduationCap } from "react-icons/fa6";
+import { FaAward, FaBriefcase, FaFileLines, FaGraduationCap } from "react-icons/fa6";
 import { LuAward, LuCheck } from "react-icons/lu";
 import { SiCoursera, SiHackerrank, SiUdemy } from "react-icons/si";
-import { certs, edu, jobs } from "../about";
+import { certs, edu, jobs, pubs } from "../about";
 import { LiquidTabs } from "../components/mb/liquid-tabs";
 import { ExpandList } from "../components/mb/cert-list";
 import { Reveal } from "../components/folio-ui";
@@ -134,9 +134,25 @@ function Certs() {
   return <ExpandList items={items} />;
 }
 
+function Pubs() {
+  const items = pubs.map((x, i) => ({
+    id: `${i}-${x.t}`,
+    title: x.t,
+    meta: `${x.c} · ${x.o} · ${x.p} · ${x.s}`,
+    tint: BG.lemon,
+    icon: <FaFileLines aria-hidden className="h-5 w-5" />,
+    detail: `${x.d} ${x.v} (${x.o}), Paper ID ${x.id}. ${x.w}. ${x.n}`,
+    href: x.u,
+    cta: "View conference",
+    outline: true,
+  }));
+  return <ExpandList items={items} />;
+}
+
 const TABS = [
   { id: "edu", label: "Education", icon: FaGraduationCap },
   { id: "cert", label: "Certificates", icon: FaAward },
+  { id: "pub", label: "Papers", icon: FaFileLines },
   { id: "exp", label: "Experience", icon: FaBriefcase },
 ];
 
@@ -149,7 +165,7 @@ export default function Journey() {
       title="Where I've been"
       typed={{
         before: "One scroll through my",
-        words: ["studies.", "certificates.", "experience."],
+        words: ["studies.", "certificates.", "research.", "experience."],
       }}
     >
       <Reveal y={24} scale={1}>
@@ -163,6 +179,7 @@ export default function Journey() {
             {tab === "edu" && <Steps items={edu} />}
             {tab === "exp" && <Steps items={jobs} />}
             {tab === "cert" && <Certs />}
+            {tab === "pub" && <Pubs />}
           </motion.div>
         </LiquidTabs>
       </Reveal>
