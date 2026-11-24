@@ -6,9 +6,8 @@ import { useSyncExternalStore } from "react";
    Old "#/skills" links still work: they are rewritten to "/skills" on load. */
 export const PAGES = [
   { id: "about", label: "About" },
-  { id: "projects", label: "Projects" },
-  { id: "skills", label: "Skills" },
   { id: "journey", label: "Journey" },
+  { id: "projects", label: "Projects" }, // Skills now live at the top of this page
   { id: "coding", label: "Coding" },
   { id: "contact", label: "Contact" },
 ];
@@ -28,9 +27,10 @@ if (typeof window !== "undefined" && /^#\/[\w-]+/.test(location.hash)) {
 }
 
 const read = () => {
-  const id = idFromPath(
+  let id = idFromPath(
     typeof location === "undefined" ? "" : location.pathname,
   );
+  if (id === "skills") id = "projects"; // the old Skills page moved into Projects
   if (PAGES.some((p) => p.id === id)) return id;
   // "/" (and /index.html) is the landing page; any other unknown path is the 404 page
   return id === "" || id === "index.html" ? "home" : "notfound";
@@ -44,7 +44,7 @@ const subscribe = (cb) => {
   };
 };
 
-/** const route = useRoute(); -> "home" | "about" | "projects" | "skills" | "journey" | "coding" | "contact" | "notfound" */
+/** const route = useRoute(); -> "home" | "about" | "journey" | "projects" | "coding" | "contact" | "notfound" */
 export const useRoute = () =>
   useSyncExternalStore(subscribe, read, () => "home");
 export const href = (id) => (id === "home" ? `${BASE}/` : `${BASE}/${id}`);

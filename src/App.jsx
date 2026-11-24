@@ -4,14 +4,13 @@ import { site } from "./site";
 import ThemeToggle from "./components/ThemeToggle";
 import ScrollProgress from "./components/ScrollProgress";
 import InstallButton from "./components/InstallButton";
-import { SideNav, BottomNav } from "./components/NavMenu";
+import { TopNav, BottomNav } from "./components/NavMenu";
 import { BackspaceText } from "./components/backspace-text";
 import { go, href, useRoute } from "./router";
 
 const PAGE = {
   about: lazy(() => import("./pages/About")),
   projects: lazy(() => import("./pages/Projects")),
-  skills: lazy(() => import("./pages/Skills")),
   journey: lazy(() => import("./pages/Journey")),
   coding: lazy(() => import("./pages/Coding")),
   contact: lazy(() => import("./pages/Contact")),
@@ -59,29 +58,31 @@ export default function App() {
 
   const chrome = (
     <>
-      <div className="fixed inset-x-0 top-0 z-40 flex items-center justify-between gap-3 px-3 py-3 sm:px-6">
-        <a
-          href={href("home")}
-          onClick={go("home")}
-          className="logo-link glass flex items-center gap-2.5 rounded-full py-1.5 pl-1.5 pr-4"
-        >
-          <img
-            src="/icons/logo-mark.png"
-            alt=""
-            height="32"
-            className="h-8 w-auto"
-          />
-          <span className="font-display text-base font-semibold sm:text-lg">
-            {site.title}
-          </span>
-        </a>
-        <div className="flex items-center gap-2">
-          <InstallButton />
-          <ThemeToggle />
+      <header className="fixed inset-x-0 top-0 z-50 border-b border-ink/[.07] bg-mist/80 pt-[env(safe-area-inset-top)] backdrop-blur-xl">
+        <div className="mx-auto flex h-14 w-full max-w-7xl items-center justify-between gap-3 px-3 sm:px-6 lg:px-8">
+          <a
+            href={href("home")}
+            onClick={go("home")}
+            className="logo-link flex shrink-0 items-center gap-2.5 transition active:scale-95"
+          >
+            <img
+              src="/icons/logo-mark.png"
+              alt=""
+              height="32"
+              className="h-8 w-auto"
+            />
+            <span className="font-display text-lg font-extrabold leading-none">
+              {site.title}
+            </span>
+          </a>
+          <TopNav route={route} />
+          <div className="flex shrink-0 items-center gap-2">
+            <InstallButton />
+            <ThemeToggle />
+          </div>
         </div>
-      </div>
+      </header>
       {route !== "home" && <ScrollProgress />}
-      <SideNav route={route} />
       <BottomNav route={route} />
     </>
   );

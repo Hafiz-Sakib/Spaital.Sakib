@@ -1,15 +1,69 @@
 import { useMemo, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { work } from "../work";
+import { skills } from "../folio";
 import { Icon } from "../components/icons";
 import { DuoFlip } from "../components/mb/duo-flip";
+import { IntegrationHub } from "../components/mb/integration-hub";
 import { Reveal } from "../components/folio-ui";
 import Page, { BG } from "./Page";
 
 const link =
   "underline decoration-ink/30 underline-offset-4 hover:decoration-ink";
 
-/* Project showcase: DuoFlip turns the screenshot like a page, the project's details sit underneath. */
+/* Skills (moved here from the old Skills page): pick a group, its skills plug into the hub with data flowing along the wires. */
+function SkillsBlock() {
+  const [g, setG] = useState(0);
+  const [title, c, list] = skills[g];
+  const apps = list.map((s) => ({
+    id: s,
+    name: s,
+    tint: BG[c],
+    icon: <Icon name={s} className="h-6 w-6" />,
+  }));
+  return (
+    <Reveal y={24} scale={1}>
+      <div className="card p-4 sm:p-8">
+        <div
+          role="tablist"
+          aria-label="Skill groups"
+          className="flex items-center gap-1 overflow-x-auto rounded-full bg-ink/6 p-1 scrollbar-none [&::-webkit-scrollbar]:hidden"
+        >
+          {skills.map(([t], i) => (
+            <button
+              key={t}
+              role="tab"
+              aria-selected={g === i}
+              onClick={() => setG(i)}
+              className="relative inline-flex h-10 shrink-0 items-center justify-center whitespace-nowrap rounded-full px-4 text-sm font-semibold outline-none focus-visible:ring-2 focus-visible:ring-ink/40 sm:flex-1 sm:px-3"
+            >
+              {g === i && (
+                <motion.span
+                  layoutId="skill-pill"
+                  transition={{ type: "spring", stiffness: 420, damping: 32 }}
+                  className="absolute inset-0 rounded-full bg-surface shadow-sm"
+                />
+              )}
+              <span className={`relative ${g === i ? "text-ink" : "text-ink/55"}`}>
+                {t}
+              </span>
+            </button>
+          ))}
+        </div>
+        <div className="mt-4 sm:mt-6">
+          <IntegrationHub
+            key={title}
+            apps={apps}
+            label={title}
+            sub={`${list.length} skills`}
+          />
+        </div>
+      </div>
+    </Reveal>
+  );
+}
+
+/* Skills first, then the project showcase: DuoFlip turns the screenshot like a page, the project's details sit underneath. */
 export default function Projects() {
   const [a, setA] = useState(0);
   const p = work[a];
@@ -25,13 +79,23 @@ export default function Projects() {
   return (
     <Page
       id="projects"
-      eyebrow="Projects"
-      title="Things I've shipped"
+      eyebrow="Skills & Projects"
+      title="What I work with"
       typed={{
-        before: "Ten projects. Turn the page to see",
-        words: ["learning apps.", "dev tools.", "full-stack platforms."],
+        before: "Web, algorithms and",
+        words: ["machine learning.", "clean interfaces.", "solid backends."],
       }}
     >
+      <SkillsBlock />
+      <Reveal y={24} scale={1}>
+        <h2 className="mb-1 mt-16 font-display text-3xl font-semibold sm:mt-20 sm:text-4xl">
+          Things I've shipped
+        </h2>
+        <p className="mb-6 text-ink/65">
+          Ten projects. Turn the page to see learning apps, dev tools and
+          full-stack platforms.
+        </p>
+      </Reveal>
       <Reveal y={24} scale={1}>
         <div className="card p-3 sm:p-4">
           <DuoFlip images={images} index={a} onIndex={setA} />
