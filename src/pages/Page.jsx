@@ -3,6 +3,7 @@ import { animate, motion, useInView } from "framer-motion";
 import { PAGES, go, href } from "../router";
 import { BlurText, Reveal } from "../components/folio-ui";
 import { BackspaceText } from "../components/backspace-text";
+import { useAutoReveal } from "../hooks/useAutoReveal";
 
 export const BG = {
   lilac: "bg-lilac",
@@ -43,6 +44,7 @@ export function CountUp({ to, suffix = "", className = "" }) {
 
 /* Shared frame of every extra page: title, content, and a link to the next page */
 export default function Page({ id, eyebrow, title, sub, typed, children }) {
+  useAutoReveal(id);
   const i = PAGES.findIndex((p) => p.id === id);
   const next = PAGES[(i + 1) % PAGES.length];
   return (

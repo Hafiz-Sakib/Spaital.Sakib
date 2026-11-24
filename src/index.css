@@ -68,3 +68,68 @@ h1, h2, h3 { font-family: var(--font-display); letter-spacing: -0.02em; }
 
 /* Cards on the extra pages */
 .card { background: rgb(var(--surface)); border-radius: 1.5rem; box-shadow: 0 0 0 1px rgb(var(--ink) / .07), 0 18px 44px -26px rgb(0 0 0 / .35); }
+
+/* ---------- Link hover: the link takes the brand colour of the site it opens ----------
+   Add `brand brand-<name>` to a link (see About / Contact). Custom colour: style={{ "--b": "#hex" }} */
+.brand { position: relative; isolation: isolate; --b: #7c3aed; }
+.brand::before { content: ""; position: absolute; inset: 0; z-index: -1; border-radius: inherit; background: var(--b); opacity: 0; transition: opacity .25s ease; pointer-events: none; }
+.brand:hover::before, .brand:focus-visible::before { opacity: 1; }
+.brand:hover, .brand:focus-visible, .brand:hover svg, .brand:focus-visible svg { color: #fff !important; }
+.brand:hover { --tw-ring-color: transparent; }
+.brand-github { --b: #24292f; }
+:root.dark .brand-github { --b: #3a424c; }
+.brand-linkedin { --b: #0a66c2; }
+.brand-codeforces { --b: #1f8acb; }
+.brand-leetcode { --b: #ffa116; }
+.brand-x { --b: #14151a; }
+:root.dark .brand-x { --b: #3a424c; }
+.brand-instagram { --b: linear-gradient(45deg, #f58529, #dd2a7b 45%, #8134af 75%, #515bd4); }
+.brand-facebook { --b: #1877f2; }
+.brand-whatsapp { --b: #25d366; }
+
+/* ======================================================================
+   Site-wide motion: scroll reveal + hover (hover only for mouse / trackpad; reduced-motion is respected)
+   ====================================================================== */
+@media (prefers-reduced-motion: no-preference) {
+  /* Scroll reveal: hooks/useAutoReveal.js adds the classes and removes them when the animation ends */
+  .rv { opacity: 0; transform: translate3d(0, 26px, 0) scale(.985); will-change: opacity, transform;
+    transition: opacity .65s cubic-bezier(.22,1,.36,1) var(--rv-d, 0ms), transform .85s cubic-bezier(.22,1,.36,1) var(--rv-d, 0ms) !important; }
+  .rv.rv-in { opacity: 1; transform: none; }
+}
+
+@media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+  :root { --ease-out: cubic-bezier(.22,1,.36,1); }
+
+  /* Cards rise a little and the shadow deepens. Cards with inputs or canvases stay still. */
+  main .card:not([style*="transform"]) {
+    transition-property: box-shadow, translate, background-color, color, border-color, opacity, transform;
+    transition-duration: .4s; transition-timing-function: var(--ease-out);
+  }
+  main .card:not([style*="transform"]):hover { box-shadow: 0 0 0 1px rgb(var(--ink) / .07), 0 2px 4px rgba(20,21,26,.05), 0 26px 56px -18px rgba(20,21,26,.22); }
+  :root.dark main .card:not([style*="transform"]):hover { box-shadow: 0 0 0 1px rgba(255,255,255,.12), 0 2px 4px rgba(0,0,0,.45), 0 26px 60px -18px rgba(0,0,0,.8); }
+  main .card:not([style*="transform"]):not(.absolute):not(.fixed):not(.sticky):not(:has(input, textarea, select, canvas)) { position: relative; }
+  /* invisible strip under the card so the hover does not flicker at its lower edge while it lifts */
+  main .card:not([style*="transform"]):not(.absolute):not(.fixed):not(.sticky):not(:has(input, textarea, select, canvas))::after { content: ""; position: absolute; inset: auto 0 -5px; height: 5px; }
+  main .card:not([style*="transform"]):not(.absolute):not(.fixed):not(.sticky):not(:has(input, textarea, select, canvas)):hover { translate: 0 -3px; }
+
+  /* Buttons and pills lift 1px on hover */
+  main :is(button, a):is(.rounded-full, .rounded-2xl):not(.absolute):not(.fixed):not(.sticky):not([class*="hover:-translate"]),
+  main .lift {
+    position: relative;
+    transition-property: color, background-color, border-color, box-shadow, translate, opacity, transform, filter;
+    transition-duration: .28s; transition-timing-function: var(--ease-out);
+  }
+  main :is(button, a):is(.rounded-full, .rounded-2xl):not(.absolute):not(.fixed):not(.sticky):not([class*="hover:-translate"]):not(:disabled):hover { translate: 0 -1px; }
+  /* Dark (primary) buttons also get a deeper shadow */
+  main :is(button, a)[class~="bg-ink"]:not(:disabled):hover { box-shadow: 0 10px 22px -10px rgb(var(--ink) / .55); }
+
+  /* Bigger tiles (stat boxes etc.) rise a bit more */
+  main .lift:not(:disabled):hover { translate: 0 -3px; border-color: rgb(var(--ink) / .22); box-shadow: 0 14px 28px -14px rgb(var(--ink) / .3); }
+
+  /* Header logo: turns a little and grows on hover */
+  .logo-link img { transition: transform .45s var(--ease-out); }
+  .logo-link:hover img { transform: rotate(-8deg) scale(1.1); }
+  /* Social icons: the icon itself pops */
+  .brand svg { transition: transform .3s var(--ease-out); }
+  .brand:hover svg { transform: scale(1.12) rotate(-6deg); }
+}

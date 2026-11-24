@@ -442,7 +442,7 @@ export default function Contact() {
                         href={s.href}
                         target="_blank"
                         rel="noreferrer"
-                        className={chip}
+                        className={`${chip} brand brand-${s.name.toLowerCase()}`}
                       >
                         <Icon name={s.name} />
                         {s.name}

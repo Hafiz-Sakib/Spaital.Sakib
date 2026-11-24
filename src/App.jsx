@@ -2,6 +2,7 @@ import { Suspense, lazy, useEffect, useMemo } from "react";
 import { images } from "./gallery";
 import { site } from "./site";
 import ThemeToggle from "./components/ThemeToggle";
+import ScrollProgress from "./components/ScrollProgress";
 import InstallButton from "./components/InstallButton";
 import { SideNav, BottomNav } from "./components/NavMenu";
 import { BackspaceText } from "./components/backspace-text";
@@ -62,7 +63,7 @@ export default function App() {
         <a
           href={href("home")}
           onClick={go("home")}
-          className="glass flex items-center gap-2.5 rounded-full py-1.5 pl-1.5 pr-4"
+          className="logo-link glass flex items-center gap-2.5 rounded-full py-1.5 pl-1.5 pr-4"
         >
           <img
             src="/icons/logo-mark.png"
@@ -79,6 +80,7 @@ export default function App() {
           <ThemeToggle />
         </div>
       </div>
+      {route !== "home" && <ScrollProgress />}
       <SideNav route={route} />
       <BottomNav route={route} />
     </>

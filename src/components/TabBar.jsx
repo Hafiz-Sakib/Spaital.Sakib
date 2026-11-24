@@ -162,8 +162,22 @@ function PlusIcon({ className, strokeWidth }) {
   );
 }
 
+/* More: four squares pulse one after another */
+function MoreIcon({ active, className, strokeWidth }) {
+  const c = useIcon(active);
+  const sq = [[3, 3], [14, 3], [14, 14], [3, 14]];
+  return (
+    <Shell className={className} strokeWidth={strokeWidth}>
+      {sq.map(([x, y], i) => (
+        <motion.rect key={i} width="7" height="7" x={x} y={y} rx="1" animate={c} transition={{ duration: 0.45, delay: i * 0.07 }}
+          variants={{ normal: { scale: 1 }, animate: { scale: [1, 0.7, 1] } }} style={{ transformBox: "fill-box", transformOrigin: "center" }} />
+      ))}
+    </Shell>
+  );
+}
+
 /* tab.icon -> component */
-export const ICONS = { home: HomeIcon, photos: ImageIcon, about: UserIcon, projects: GridIcon, coding: CodeIcon, skills: CpuIcon, journey: CapIcon, contests: TrophyIcon, contact: MailIcon };
+export const ICONS = { home: HomeIcon, photos: ImageIcon, about: UserIcon, projects: GridIcon, coding: CodeIcon, skills: CpuIcon, journey: CapIcon, contests: TrophyIcon, contact: MailIcon, more: MoreIcon };
 
 const GLIDE = [0.22, 1, 0.36, 1];
 const SPRING = { type: "spring", stiffness: 500, damping: 34 };

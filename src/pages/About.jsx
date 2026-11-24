@@ -87,13 +87,16 @@ export default function About() {
               "LeetCode",
             ]}
           />
-          <dl className="mt-10 grid grid-cols-2 gap-x-6 gap-y-8 border-t border-ink/10 pt-8 sm:grid-cols-4">
+          <dl className="mt-10 grid grid-cols-2 gap-3 border-t border-ink/10 pt-8 sm:gap-4 md:grid-cols-4 lg:grid-cols-2">
             {stats.map((x) => (
-              <div key={x.l}>
+              <div
+                key={x.l}
+                className="lift rounded-2xl border border-ink/10 px-4 py-4 sm:px-5 sm:py-5"
+              >
                 <dd className="font-display text-4xl font-extrabold sm:text-5xl">
                   <Odometer to={x.v} suffix={x.s} />
                 </dd>
-                <dt className="mt-1 text-sm text-ink/55">{x.l}</dt>
+                <dt className="mt-2 text-sm text-ink/55">{x.l}</dt>
               </div>
             ))}
           </dl>
@@ -110,7 +113,7 @@ export default function About() {
                     rel="noreferrer"
                     aria-label={s.name}
                     title={s.name}
-                    className="grid h-11 w-11 place-items-center rounded-full bg-surface shadow-sm ring-1 ring-ink/8 transition duration-200 hover:-translate-y-1 hover:shadow-md"
+                    className={`brand brand-${s.name.toLowerCase()} grid h-11 w-11 place-items-center rounded-full bg-surface shadow-sm ring-1 ring-ink/8 transition duration-200 hover:-translate-y-1 hover:shadow-md`}
                   >
                     <Icon name={s.name} className="h-5 w-5" />
                   </a>
