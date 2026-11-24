@@ -69,11 +69,12 @@ export default function Projects() {
                 </div>
                 <div className="mt-5 flex gap-4 text-sm font-semibold">
                   <a
-                    className={link}
+                    className={`${link} inline-flex items-center gap-1.5`}
                     href={p.live}
                     target="_blank"
                     rel="noreferrer"
                   >
+                    <Icon name="Website" className="h-4 w-4" mono />
                     Live site
                   </a>
                   <a
