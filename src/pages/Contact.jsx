@@ -3,7 +3,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import { LuMail, LuMessageSquareText, LuTag, LuUser } from "react-icons/lu";
 import { site } from "../site";
 import { Icon } from "../components/icons";
-import { OrbitCard } from "../components/mb/orbit-card";
+import { IntegrationHub } from "@/components/integration-hub";
 import { BellToggle } from "../components/BellToggle";
 import { SuccessModal } from "../components/SuccessModal";
 import Page, { Reveal } from "./Page";
@@ -384,6 +384,13 @@ export default function Contact() {
       /* clipboard blocked */
     }
   };
+  /* every profile link (same ones as About, plus Codeforces and LeetCode) becomes a tile on the hub */
+  const apps = social.map((s) => ({
+    id: s.name,
+    name: s.name,
+    href: s.href,
+    icon: <Icon name={s.name} className="h-5 w-5" />,
+  }));
   const quick = social
     .filter((s) => s.name === "WhatsApp" || s.name === "LinkedIn")
     .sort((a) => (a.name === "WhatsApp" ? -1 : 1));
@@ -401,20 +408,18 @@ export default function Contact() {
         <Reveal x={-30} y={0} className="h-full">
           <div className="card flex h-full flex-col p-3">
             <div className="flex-1 rounded-[1.4rem] bg-linear-to-b from-surface to-mist/70 px-6 pb-6 pt-8 text-center">
-              <OrbitCard
+              <IntegrationHub
+                apps={apps}
+                label="Find me online"
+                speed={3}
+                trail={10}
                 center={
                   <img
                     src="/profile.webp"
                     alt=""
-                    className="h-20 w-20 rounded-[1.6rem] object-cover shadow-lg ring-4 ring-surface"
+                    className="h-full w-full object-cover"
                   />
                 }
-                items={(site.social || []).map((s) => ({
-                  key: s.name,
-                  href: s.href,
-                  label: s.name,
-                  node: <Icon name={s.name} className="h-5 w-5" />,
-                }))}
               />
               <h3 className="mt-4 text-2xl font-extrabold">
                 Let's build something that flows

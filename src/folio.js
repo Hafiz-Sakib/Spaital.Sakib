@@ -2,7 +2,7 @@
 export const skills = [
   ["Languages", "lilac", ["C", "C++", "Java", "Python", "JavaScript", "TypeScript", "Dart"]],
   ["Frontend", "sky", ["React", "Next.js", "Tailwind CSS", "HTML5", "CSS3", "Redux"]],
-  ["Backend & data", "mint", ["Node.js", "Express.js", "Firebase", "MongoDB", "PostgreSQL", "REST APIs"]],
+  ["Backend & data", "mint", ["Node.js", "Express.js", "Firebase", "Supabase", "MongoDB", "PostgreSQL", "REST APIs"]],
   ["Algorithms", "peach", ["Dynamic Programming", "Graph Theory", "Binary Search", "STL", "Number Theory"]],
   ["Machine learning", "lemon", ["Neural Networks", "LSTM", "NLP", "Pandas", "Jupyter"]],
   ["Cloud & tools", "lilac", ["AWS", "Docker", "Git", "Linux", "Vercel", "CI/CD", "Figma", "LaTeX"]],

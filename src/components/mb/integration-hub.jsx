@@ -35,7 +35,7 @@ export function IntegrationHub({ apps, label, sub, className = "" }) {
       {apps.map((a, i) => (
         <div key={a.id} className="absolute z-[5] w-[4.6rem] -translate-x-1/2 -translate-y-1/2 sm:w-[5.5rem]" style={{ left: `${pts[i][0]}%`, top: `${pts[i][1]}%` }}>
           <motion.div className="flex flex-col items-center gap-1" initial={still ? false : { opacity: 0, scale: 0.4 }} animate={{ opacity: 1, scale: 1 }} transition={{ type: "spring", stiffness: 380, damping: 22, delay: 0.1 + i * 0.07 }}>
-            <span className={`grid h-12 w-12 place-items-center rounded-2xl shadow-md ring-1 ring-ink/[.06] sm:h-14 sm:w-14 ${a.tint || "bg-surface"}`}>{a.icon}</span>
+            <span data-glow className={`grid h-12 w-12 place-items-center rounded-2xl shadow-md ring-1 ring-ink/[.06] sm:h-14 sm:w-14 ${a.tint || "bg-surface"}`}>{a.icon}</span>
             <span className="max-w-full truncate rounded-full bg-surface/90 px-2 py-0.5 text-[11px] font-semibold shadow-sm ring-1 ring-ink/[.05] sm:text-xs">{a.name}</span>
           </motion.div>
         </div>

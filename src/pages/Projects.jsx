@@ -63,7 +63,7 @@ function SkillsBlock() {
   );
 }
 
-/* Skills first, then the project showcase: DuoFlip turns the screenshot like a page, the project's details sit underneath. */
+/* Project showcase first, then skills: DuoFlip turns the screenshot like a page, the project's details sit underneath. */
 export default function Projects() {
   const [a, setA] = useState(0);
   const p = work[a];
@@ -79,23 +79,10 @@ export default function Projects() {
   return (
     <Page
       id="projects"
-      eyebrow="Skills & Projects"
-      title="What I work with"
-      typed={{
-        before: "Web, algorithms and",
-        words: ["machine learning.", "clean interfaces.", "solid backends."],
-      }}
+      eyebrow="Projects"
+      title="Things I've shipped"
+      sub="Ten projects. Turn the page to see learning apps, dev tools and full-stack platforms."
     >
-      <SkillsBlock />
-      <Reveal y={24} scale={1}>
-        <h2 className="mb-1 mt-16 font-display text-3xl font-semibold sm:mt-20 sm:text-4xl">
-          Things I've shipped
-        </h2>
-        <p className="mb-6 text-ink/65">
-          Ten projects. Turn the page to see learning apps, dev tools and
-          full-stack platforms.
-        </p>
-      </Reveal>
       <Reveal y={24} scale={1}>
         <div className="card p-3 sm:p-4">
           <DuoFlip images={images} index={a} onIndex={setA} />
@@ -156,6 +143,15 @@ export default function Projects() {
           </AnimatePresence>
         </div>
       </Reveal>
+      <Reveal y={24} scale={1}>
+        <h2 className="mb-1 mt-16 font-display text-3xl font-semibold sm:mt-20 sm:text-4xl">
+          What I work with
+        </h2>
+        <p className="mb-6 text-ink/65">
+          Web, algorithms and machine learning. Pick a group to see the tools.
+        </p>
+      </Reveal>
+      <SkillsBlock />
     </Page>
   );
 }

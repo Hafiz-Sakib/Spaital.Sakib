@@ -74,7 +74,7 @@ export function ActivityGrid({ title = "Contributions", user = "Hafiz-Sakib", pa
   return (
     <div className="card p-3 sm:p-4">
       <div className="rounded-[1.4rem] bg-gradient-to-b from-emerald-50 to-white/60 p-3 dark:from-emerald-400/10 dark:to-transparent sm:p-5">
-        <div className="rounded-3xl bg-surface p-5 shadow-sm dark:ring-1 dark:ring-white/[.06]">
+        <div data-glow className="rounded-3xl bg-surface p-5 shadow-sm dark:ring-1 dark:ring-white/[.06]">
           <div className="flex flex-wrap items-start justify-between gap-2">
             <div>
               <h3 className="text-base font-semibold text-ink/70">{title}</h3>
@@ -110,7 +110,7 @@ export function ActivityGrid({ title = "Contributions", user = "Hafiz-Sakib", pa
         </div>
         <div className="mt-3 grid gap-3 sm:grid-cols-3">
           {tiles.map(([t, v, u, f]) => (
-            <div key={t} className="rounded-2xl bg-surface/80 p-4 shadow-sm dark:ring-1 dark:ring-white/[.06]">
+            <div key={t} data-glow className="rounded-2xl bg-surface/80 p-4 shadow-sm dark:ring-1 dark:ring-white/[.06]">
               <p className="text-xs font-semibold text-ink/55">{t}</p>
               <p className="mt-1 font-display text-2xl font-extrabold"><Odometer to={v} /> <span className="text-sm font-medium text-ink/60">{u}</span></p>
               <p className="text-xs text-ink/50">{f}</p>

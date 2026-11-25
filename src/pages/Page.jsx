@@ -83,7 +83,7 @@ export default function Page({ id, eyebrow, title, sub, typed, children }) {
         )}
       </header>
       {children}
-      <nav className="mt-16 flex items-center justify-between gap-3 border-t border-ink/10 pt-6 text-sm font-semibold">
+      <nav data-reveal="up" className="mt-16 flex items-center justify-between gap-3 border-t border-ink/10 pt-6 text-sm font-semibold">
         <a
           href={href("home")}
           onClick={go("home")}

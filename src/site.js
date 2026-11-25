@@ -19,6 +19,10 @@ export const site = {
     { name: "Instagram", href: "https://www.instagram.com/___sakib.404/" },
     { name: "Facebook", href: "https://www.facebook.com/Sakib1056" },
     {
+      name: "Messenger",
+      href: "https://m.me/Sakib.1118?text=Hello%20Hafiz%20Sakib!%20I%20visited%20your%20portfolio%20and%20would%20like%20to%20connect%20with%20you.",
+    },
+    {
       name: "WhatsApp",
       href: "https://api.whatsapp.com/send?phone=+8801516195904",
     },

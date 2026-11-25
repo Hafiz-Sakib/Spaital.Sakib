@@ -31,6 +31,11 @@ const FOCUS = [
   ],
 ];
 
+/* Codeforces / LeetCode links live on the Contact page only */
+const social = (site.social || []).filter(
+  (s) => s.name !== "Codeforces" && s.name !== "LeetCode",
+);
+
 export default function About() {
   return (
     <Page
@@ -100,12 +105,12 @@ export default function About() {
               </div>
             ))}
           </dl>
-          {site.social?.length > 0 && (
+          {social.length > 0 && (
             <ul
               className="mt-10 flex flex-wrap gap-2"
               aria-label="Social links"
             >
-              {site.social.map((s) => (
+              {social.map((s) => (
                 <li key={s.name}>
                   <a
                     href={s.href}
@@ -129,6 +134,8 @@ export default function About() {
         className="mt-20 grid items-center gap-10 lg:grid-cols-[minmax(0,25rem)_1fr] lg:gap-14"
       >
         <Reveal x={-28} y={0}>
+          {/* .flux-night restyles the card for night mode (see index.css) */}
+          <div className="flux-night mx-auto lg:mx-0">
           <FluxCard
             className="mx-auto lg:mx-0"
             title="Keep the noise out"
@@ -139,6 +146,7 @@ export default function About() {
             accent="#ffb020"
             colors={LAGOON}
           />
+          </div>
         </Reveal>
         <Reveal x={28} y={0} delay={0.08}>
           <p className="mb-3 inline-block rounded-full bg-ink/10 px-3 py-1 text-xs font-semibold tracking-wide text-ink/70">

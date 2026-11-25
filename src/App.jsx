@@ -36,7 +36,51 @@ const shuffle = (list) => {
   return r;
 };
 
+/* Night-mode glow on every card / tile, for mouse hover AND touch.
+   Feeds the glow its position (--mx / --my) from the pointer or finger, and marks the pressed surface `.is-hover`
+   (kept ~0.9s after release, dropped at once if the gesture turns into a scroll). Mouse hover itself is plain CSS :hover.
+   The glow is only drawn in night mode (see index.css), so day mode is untouched. Surfaces: `.card`, `.lift`, `[data-glow]`. */
+const GLOW = ".card, .lift, [data-glow]";
+function useCardGlow() {
+  useEffect(() => {
+    let held = [], timer = 0;
+    const clear = () => { clearTimeout(timer); held.forEach((c) => c.classList.remove("is-hover")); held = []; };
+    const place = (e) => {
+      const list = [];
+      for (let c = e.target.closest?.(GLOW); c; c = c.parentElement?.closest(GLOW)) {
+        const r = c.getBoundingClientRect();
+        c.style.setProperty("--mx", `${e.clientX - r.left}px`);
+        c.style.setProperty("--my", `${e.clientY - r.top}px`);
+        list.push(c);
+      }
+      return list;
+    };
+    const down = (e) => {
+      const list = place(e);
+      if (e.pointerType === "mouse") return;
+      clear();
+      list.forEach((c) => c.classList.add("is-hover"));
+      held = list;
+    };
+    const move = (e) => { place(e); };
+    const up = (e) => { if (e.pointerType !== "mouse") { clearTimeout(timer); timer = setTimeout(clear, 900); } };
+    const opt = { passive: true };
+    document.addEventListener("pointerdown", down, opt);
+    document.addEventListener("pointermove", move, opt);
+    document.addEventListener("pointerup", up, opt);
+    document.addEventListener("pointercancel", clear, opt);
+    return () => {
+      document.removeEventListener("pointerdown", down);
+      document.removeEventListener("pointermove", move);
+      document.removeEventListener("pointerup", up);
+      document.removeEventListener("pointercancel", clear);
+      clear();
+    };
+  }, []);
+}
+
 export default function App() {
+  useCardGlow();
   const route = useRoute();
   const tunnel = useMemo(
     () =>

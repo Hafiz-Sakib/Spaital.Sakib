@@ -190,7 +190,7 @@ export default function Journey() {
                 <Icon aria-hidden className="h-5 w-5 text-ink/60" />
                 {label}
               </h2>
-              <div className="rounded-[2rem] bg-surface p-5 shadow-[0_12px_40px_-12px_rgba(20,21,26,.12)] sm:p-8">
+              <div data-glow className="rounded-[2rem] bg-surface p-5 shadow-[0_12px_40px_-12px_rgba(20,21,26,.12)] sm:p-8">
                 {body()}
               </div>
             </Reveal>

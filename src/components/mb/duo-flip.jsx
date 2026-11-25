@@ -29,7 +29,7 @@ export function DuoFlip({ images, index, onIndex, className = "" }) {
 
   return (
     <div className={className} tabIndex={0} onKeyDown={(e) => { if (e.key === "ArrowRight") next(); if (e.key === "ArrowLeft") prev(); }} role="group" aria-label="Project gallery" aria-roledescription="carousel">
-      <div className="relative aspect-[16/10] w-full select-none overflow-hidden rounded-[1.4rem] bg-mist shadow-[0_20px_50px_-20px_rgba(20,21,26,.35)] ring-1 ring-ink/[.06]" style={{ perspective: 1600 }}>
+      <div data-glow className="relative aspect-[16/10] w-full select-none overflow-hidden rounded-[1.4rem] bg-mist shadow-[0_20px_50px_-20px_rgba(20,21,26,.35)] ring-1 ring-ink/[.06]" style={{ perspective: 1600 }}>
         {/* the two halves that stay put */}
         <Half side="l" src={(dir > 0 ? A : B).src} alt={!turn ? A.alt : ""} />
         <Half side="r" src={(dir > 0 ? B : A).src} alt="" />

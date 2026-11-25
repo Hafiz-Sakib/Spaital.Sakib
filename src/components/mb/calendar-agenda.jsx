@@ -60,7 +60,7 @@ export function CalendarAgenda({ days, defaultDay = 0, title = "Planner", onTogg
     setDraft({ time: draft.time, title: "" }); setAdding(false);
   };
   return (
-    <div className="mx-auto w-full max-w-xl rounded-[2rem] bg-surface p-3 shadow-[0_20px_60px_-24px_rgba(20,21,26,.3)] ring-1 ring-ink/[.05] sm:p-4">
+    <div data-glow className="mx-auto w-full max-w-xl rounded-[2rem] bg-surface p-3 shadow-[0_20px_60px_-24px_rgba(20,21,26,.3)] ring-1 ring-ink/[.05] sm:p-4">
       <div className="flex items-start justify-between gap-3 px-2 pt-2">
         <div className="min-w-0">
           <h3 className="font-display text-2xl font-bold">{title}</h3>

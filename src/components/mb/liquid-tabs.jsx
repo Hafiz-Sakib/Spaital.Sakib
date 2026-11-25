@@ -21,7 +21,7 @@ export function LiquidTabs({ tabs, value, onChange, children, className = "" }) 
           );
         })}
       </div>
-      <div role="tabpanel" className={`relative z-[1] -mt-1 bg-surface p-5 shadow-[0_12px_40px_-12px_rgba(20,21,26,.12)] sm:p-8 ${at === 0 ? "rounded-b-[2rem] rounded-tr-[2rem]" : at === tabs.length - 1 ? "rounded-b-[2rem] rounded-tl-[2rem]" : "rounded-[2rem]"}`}>{children}</div>
+      <div role="tabpanel" data-glow className={`relative z-[1] -mt-1 bg-surface p-5 shadow-[0_12px_40px_-12px_rgba(20,21,26,.12)] sm:p-8 ${at === 0 ? "rounded-b-[2rem] rounded-tr-[2rem]" : at === tabs.length - 1 ? "rounded-b-[2rem] rounded-tl-[2rem]" : "rounded-[2rem]"}`}>{children}</div>
     </div>
   );
 }

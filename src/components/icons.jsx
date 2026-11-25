@@ -5,7 +5,7 @@ import {
   SiGit, SiGithub, SiLinux, SiVercel, SiFigma, SiLatex, SiTensorflow, SiPandas, SiJupyter,
   SiCodeforces, SiLeetcode, SiX, SiInstagram, SiFacebook, SiWhatsapp, SiThreedotjs, SiVite,
   SiMysql, SiStripe, SiHackerrank, SiGeeksforgeeks, SiGithubactions, SiFramer, SiReactrouter,
-  SiJsonwebtokens, SiPwa,
+  SiJsonwebtokens, SiPwa, SiSupabase, SiMessenger,
 } from "react-icons/si";
 import {
   FaLinkedin, FaHtml5, FaCss3Alt, FaAws, FaGlobe, FaDatabase, FaBrain, FaCircleNodes, FaCode,
@@ -28,7 +28,7 @@ const MAP = {
   // backend
   "Node.js": [SiNodedotjs, "#339933"], "Express.js": [SiExpress, "#14151A"], "Express": [SiExpress, "#14151A"],
   "Firebase": [SiFirebase, "#F59E0B"], "MongoDB": [SiMongodb, "#47A248"], "PostgreSQL": [SiPostgresql, "#336791"],
-  "MySQL": [SiMysql, "#4479A1"], "REST APIs": [FaServer, "#14151A"], "Stripe": [SiStripe, "#635BFF"], "JWT": [SiJsonwebtokens, "#D63AFF"],
+  "MySQL": [SiMysql, "#4479A1"], "REST APIs": [FaServer, "#14151A"], "Stripe": [SiStripe, "#635BFF"], "JWT": [SiJsonwebtokens, "#D63AFF"], "Supabase": [SiSupabase, "#3ECF8E"],
   // algorithms
   "Dynamic Programming": [FaDiagramProject, "#7C6CF6"], "Graph Theory": [FaCircleNodes, "#7C6CF6"],
   "Binary Search": [FaRoute, "#7C6CF6"], "STL": [SiCplusplus, "#00599C"], "Number Theory": [FaKey, "#7C6CF6"],
@@ -42,7 +42,7 @@ const MAP = {
   "Figma": [SiFigma, "#F24E1E"], "LaTeX": [SiLatex, "#008080"],
   // social / contact
   "LinkedIn": [FaLinkedin, "#0A66C2"], "Codeforces": [SiCodeforces, "#1F8ACB"], "LeetCode": [SiLeetcode, "#FFA116"],
-  "X": [SiX, "#14151A"], "Instagram": [SiInstagram, "#E4405F"], "Facebook": [SiFacebook, "#1877F2"],
+  "X": [SiX, "#14151A"], "Instagram": [SiInstagram, "#E4405F"], "Facebook": [SiFacebook, "#1877F2"], "Messenger": [SiMessenger, "#0A7CFF"],
   "WhatsApp": [SiWhatsapp, "#25D366"], "HackerRank": [SiHackerrank, "#00A55A"], "GeeksforGeeks": [SiGeeksforgeeks, "#2F8D46"],
   "Email": [FaEnvelope, "#7C6CF6"], "Call": [FaPhone, "#16A34A"], "Website": [FaGlobe, "#14151A"],
   "Database": [FaDatabase, "#14151A"], "Code": [FaCode, "#14151A"], "Chart": [FaChartLine, "#14151A"],
