@@ -20,7 +20,7 @@ const CY = 164;
 const RX = 132;
 const RY = 122;
 const TILE = 52;
-const HUB = 84;
+const HUB = 88;
 
 /* Tile positions on an ellipse (clockwise from the top) and one cubic wire per tile.
    Each wire is written hub -> tile, so drawing it with pathLength grows it outward from the hub.
@@ -106,7 +106,10 @@ export function IntegrationHub({
   const packet = Math.max(1, Math.round(trail));
 
   const boxRef = useRef(null);
-  const [scale, setScale] = useState(1);
+  const [fit, setFit] = useState({ scale: 1, left: 0 });
+  const scale = fit.scale;
+  const hubRef = useRef(null);
+  const colorOf = (a) => a.color || "rgb(var(--ink))";
   const seen = useInView(boxRef, { once: true, amount: 0.25 });
   const live = useInView(boxRef, { amount: 0.05 }); // pauses the loop off screen
   const show = still || seen;
@@ -125,9 +128,13 @@ export function IntegrationHub({
   useLayoutEffect(() => {
     const el = boxRef.current;
     if (!el) return;
-    const fit = () => setScale(Math.min(1, el.clientWidth / W) || 1);
-    fit();
-    const ro = new ResizeObserver(fit);
+    const measureBox = () => {
+      const cw = el.clientWidth || W;
+      const sc = Math.min(1, cw / W) || 1;
+      setFit({ scale: sc, left: Math.round((cw - W * sc) / 2) });
+    };
+    measureBox();
+    const ro = new ResizeObserver(measureBox);
     ro.observe(el);
     return () => ro.disconnect();
   }, []);
@@ -221,14 +228,8 @@ export function IntegrationHub({
     >
       <div
         className="absolute top-0"
-        style={{
-          left: "50%",
-          width: W,
-          height: H,
-          marginLeft: -W / 2,
-          transform: `scale(${scale})`,
-          transformOrigin: "50% 0",
-        }}
+        /* `zoom` (not transform: scale) re-lays the stage out at the new size, so the photo, icons and text stay sharp */
+        style={{ left: fit.left, width: W, height: H, zoom: scale }}
       >
         {/* soft glow + two faint rounded rings */}
         <div
@@ -242,12 +243,12 @@ export function IntegrationHub({
             background: "radial-gradient(closest-side, rgb(var(--ink) / .09), rgb(var(--ink) / .03) 55%, transparent)",
           }}
         />
-        {[132, 186].map((s, k) => (
+        {[122, 172].map((s, k) => (
           <motion.div
             key={s}
             aria-hidden
             className="absolute border border-ink/[.07]"
-            style={{ left: CX - s / 2, top: CY - s / 2, width: s, height: s, borderRadius: s * 0.3 }}
+            style={{ left: CX - s / 2, top: CY - s / 2, width: s, height: s, borderRadius: s }}
             initial={still ? false : { opacity: 0, scale: 0.6 }}
             animate={show ? { opacity: 1, scale: 1 } : undefined}
             transition={{ type: "spring", stiffness: 90, damping: 18, delay: 0.12 + k * 0.1 }}
@@ -275,10 +276,9 @@ export function IntegrationHub({
                 <path
                   d={g.d}
                   fill="none"
-                  className="stroke-ink"
-                  strokeWidth="2"
+                  strokeWidth="2.2"
                   strokeLinecap="round"
-                  style={{ opacity: on ? 1 : 0, transition: "opacity .2s" }}
+                  style={{ stroke: colorOf(apps[i]), opacity: on ? 1 : 0, transition: "opacity .2s" }}
                 />
                 <path ref={(el) => {
                     measure.current[i] = el;
@@ -305,7 +305,7 @@ export function IntegrationHub({
                     }}
                     r="0"
                     opacity="0"
-                    className="fill-ink"
+                    style={{ fill: colorOf(apps[i]) }}
                   />
                 ))}
               </g>
@@ -315,6 +315,11 @@ export function IntegrationHub({
 
         {/* hub */}
         <motion.div
+          ref={hubRef}
+          onAnimationComplete={() => {
+            // drop the leftover blur(0px) so the photo is rendered sharp
+            if (hubRef.current) hubRef.current.style.filter = "none";
+          }}
           className="absolute z-10"
           style={{ left: CX - HUB / 2, top: CY - HUB / 2, width: HUB, height: HUB }}
           initial={still ? false : { opacity: 0, scale: 0.55, filter: "blur(14px)" }}
@@ -324,19 +329,19 @@ export function IntegrationHub({
           <div
             ref={pulse}
             aria-hidden
-            className="absolute inset-0 rounded-[1.7rem] bg-ink opacity-0"
+            className="absolute inset-0 rounded-full bg-ink opacity-0"
           />
           {!still && show && (
             <motion.span
               aria-hidden
-              className="absolute inset-0 rounded-[1.7rem] ring-2 ring-ink/25"
+              className="absolute inset-0 rounded-full ring-2 ring-ink/25"
               initial={{ scale: 1, opacity: 0.5 }}
               animate={{ scale: 1.5, opacity: 0 }}
               transition={{ duration: 1.2, delay: 0.25, ease: "easeOut" }}
             />
           )}
-          <div className="relative grid h-full w-full place-items-center rounded-[1.7rem] bg-surface p-[10px] shadow-[0_10px_30px_-10px_rgb(0_0_0/.3)] ring-1 ring-ink/10">
-            <div className="grid h-full w-full place-items-center overflow-hidden rounded-[1.25rem] bg-mist">
+          <div className="relative grid h-full w-full place-items-center rounded-full bg-surface p-[5px] shadow-[0_12px_32px_-10px_rgb(0_0_0/.35)] ring-1 ring-ink/10">
+            <div className="grid h-full w-full place-items-center overflow-hidden rounded-full bg-mist">
               {center ?? <OrbitMark />}
             </div>
           </div>
@@ -351,7 +356,8 @@ export function IntegrationHub({
             {hover != null && apps[hover] && (
               <motion.span
                 key={hover}
-                className="block whitespace-nowrap rounded-full bg-ink px-3 py-1 text-[11px] font-semibold text-mist shadow-lg"
+                className={`block whitespace-nowrap rounded-full px-3 py-1 text-[11px] font-semibold shadow-lg ${apps[hover].color ? "text-white" : "bg-ink text-mist"}`}
+                style={apps[hover].bg || apps[hover].color ? { background: apps[hover].bg || apps[hover].color } : undefined}
                 initial={{ opacity: 0, y: -4, scale: 0.92 }}
                 animate={{ opacity: 1, y: 0, scale: 1 }}
                 exit={{ opacity: 0, y: -2, scale: 0.96 }}
@@ -388,11 +394,11 @@ export function IntegrationHub({
                 onMouseLeave={() => setHover(null)}
                 onFocus={() => setHover(i)}
                 onBlur={() => setHover(null)}
-                className="grid h-full w-full place-items-center rounded-2xl bg-surface text-ink shadow-[0_6px_16px_-8px_rgb(0_0_0/.35)] ring-1 ring-ink/10 transition duration-200 dark:bg-white/[.07]"
+                className={`brand brand-${String(a.id ?? a.name).toLowerCase()} ${on ? "is-on" : ""} grid h-full w-full place-items-center rounded-2xl bg-surface text-ink shadow-[0_6px_16px_-8px_rgb(0_0_0/.35)] ring-1 ring-ink/10 transition duration-200 dark:bg-white/[.07]`}
                 style={{
                   opacity: dim ? 0.45 : 1,
                   transform: on ? "translateY(-3px) scale(1.07)" : "none",
-                  boxShadow: on ? "0 14px 24px -10px rgb(0 0 0 / .4)" : undefined,
+                  boxShadow: on ? `0 14px 26px -10px ${a.color || "rgb(0 0 0 / .4)"}` : undefined,
                 }}
               >
                 {a.icon}

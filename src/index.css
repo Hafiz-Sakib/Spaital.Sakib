@@ -75,13 +75,15 @@ h1, h2, h3 { font-family: var(--font-display); letter-spacing: -0.02em; }
 .brand::before { content: ""; position: absolute; inset: 0; z-index: -1; border-radius: inherit; background: var(--b); opacity: 0; transition: opacity .25s ease; pointer-events: none; }
 .brand:hover::before, .brand:focus-visible::before { opacity: 1; }
 .brand:hover, .brand:focus-visible, .brand:hover svg, .brand:focus-visible svg { color: #fff !important; }
-.brand:hover { --tw-ring-color: transparent; }
-.brand-github { --b: #24292f; }
+.brand:hover, .brand.is-on { --tw-ring-color: transparent; }
+.brand.is-on::before { opacity: 1; }
+.brand.is-on, .brand.is-on svg { color: #fff !important; }
+.brand-github { --b: #000; }
 :root.dark .brand-github { --b: #3a424c; }
 .brand-linkedin { --b: #0a66c2; }
 .brand-codeforces { --b: #1f8acb; }
 .brand-leetcode { --b: #ffa116; }
-.brand-x { --b: #14151a; }
+.brand-x { --b: #000; }
 :root.dark .brand-x { --b: #3a424c; }
 .brand-instagram { --b: linear-gradient(45deg, #f58529, #dd2a7b 45%, #8134af 75%, #515bd4); }
 .brand-facebook { --b: #1877f2; }
@@ -164,3 +166,4 @@ h1, h2, h3 { font-family: var(--font-display); letter-spacing: -0.02em; }
    White becomes a deep surface, dark text becomes light, the teal pixels and the orange accent keep their colours. */
 :root.dark .flux-night { filter: invert(.9) hue-rotate(180deg) saturate(1.1); border-radius: 2rem; }
 @media (prefers-reduced-motion: no-preference) { .flux-night { transition: filter .6s ease; } }
+

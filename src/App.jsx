@@ -43,11 +43,20 @@ const shuffle = (list) => {
 const GLOW = ".card, .lift, [data-glow]";
 function useCardGlow() {
   useEffect(() => {
-    let held = [], timer = 0;
-    const clear = () => { clearTimeout(timer); held.forEach((c) => c.classList.remove("is-hover")); held = []; };
+    let held = [],
+      timer = 0;
+    const clear = () => {
+      clearTimeout(timer);
+      held.forEach((c) => c.classList.remove("is-hover"));
+      held = [];
+    };
     const place = (e) => {
       const list = [];
-      for (let c = e.target.closest?.(GLOW); c; c = c.parentElement?.closest(GLOW)) {
+      for (
+        let c = e.target.closest?.(GLOW);
+        c;
+        c = c.parentElement?.closest(GLOW)
+      ) {
         const r = c.getBoundingClientRect();
         c.style.setProperty("--mx", `${e.clientX - r.left}px`);
         c.style.setProperty("--my", `${e.clientY - r.top}px`);
@@ -62,8 +71,15 @@ function useCardGlow() {
       list.forEach((c) => c.classList.add("is-hover"));
       held = list;
     };
-    const move = (e) => { place(e); };
-    const up = (e) => { if (e.pointerType !== "mouse") { clearTimeout(timer); timer = setTimeout(clear, 900); } };
+    const move = (e) => {
+      place(e);
+    };
+    const up = (e) => {
+      if (e.pointerType !== "mouse") {
+        clearTimeout(timer);
+        timer = setTimeout(clear, 900);
+      }
+    };
     const opt = { passive: true };
     document.addEventListener("pointerdown", down, opt);
     document.addEventListener("pointermove", move, opt);
@@ -203,35 +219,49 @@ export default function App() {
             <div className="pointer-events-none absolute inset-x-0 bottom-0 h-72 bg-linear-to-t from-mist via-mist/70 to-transparent" />
             <div className="pointer-events-none absolute bottom-24 left-5 max-w-[80%] sm:left-10 lg:bottom-10">
               <h1
-                className="font-display font-semibold leading-none"
-                aria-label={`Hi, I'm ${site.name}. ${site.tagline}`}
+                className="font-display leading-none"
+                aria-label={`Hello, I'm ${site.name}. ${site.tagline}`}
               >
                 <span
                   aria-hidden
-                  className="block text-2xl text-ink/50 sm:text-3xl"
+                  className="flex items-center gap-3 text-xs font-semibold uppercase tracking-[0.28em] text-ink/55 sm:text-sm"
                 >
-                  Hi, I'm
+                  <span className="h-px w-8 bg-gradient-to-r from-amber-400 to-rose-500 sm:w-12" />
+                  Hello
                 </span>
                 <span
                   aria-hidden
-                  className="mt-1 block text-ink min-h-[2.1em] text-5xl sm:min-h-[1.1em] sm:text-7xl"
+                  className="mt-3 block min-h-[2.2em] text-4xl font-extrabold tracking-tight text-ink sm:min-h-[1.15em] sm:text-6xl"
                 >
                   <BackspaceText
                     words={[
-                      ["", site.name],
-                      ["a ", "full-stack dev"],
-                      ["a ", "problem solver"],
-                      ["an ", "NLP researcher"],
+                      ["I'm ", site.name],
+                      ["I'm a ", "full-stack developer"],
+                      ["I'm a ", "competitive programmer"],
+                      ["I'm an ", "NLP researcher"],
+                      ["I'm building ", "clean UI's"],
+                      ["I'm learning ", "System Design"],
+                      ["I'm working with ", "Machine Learning"],
+                      ["I'm building ", "scalable web apps"],
                     ]}
-                    typeSpeed={80}
-                    deleteSpeed={38}
-                    hold={2200}
+                    typeSpeed={70}
+                    deleteSpeed={30}
+                    hold={2000}
                     keyClassName="bg-gradient-to-r from-violet-500 via-fuchsia-500 to-pink-500 bg-clip-text text-transparent"
                     caretClassName="text-violet-500"
                   />
                 </span>
               </h1>
-              <p className="mt-3 max-w-md text-ink/65">{site.tagline}</p>
+              <ul className="mt-4 flex max-w-md flex-wrap gap-2 text-xs font-semibold sm:text-sm">
+                {site.tagline.split("·").map((t) => (
+                  <li
+                    key={t}
+                    className="rounded-full bg-surface/70 px-3 py-1.5 text-ink/70 ring-1 ring-ink/10 backdrop-blur"
+                  >
+                    {t.trim()}
+                  </li>
+                ))}
+              </ul>
             </div>
             <p className="pointer-events-none absolute bottom-10 right-10 hidden text-sm text-ink/55 lg:block">
               Scroll · drag · hover

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { LuMail, LuMessageSquareText, LuTag, LuUser } from "react-icons/lu";
 import { site } from "../site";
@@ -384,13 +384,37 @@ export default function Contact() {
       /* clipboard blocked */
     }
   };
-  /* every profile link (same ones as About, plus Codeforces and LeetCode) becomes a tile on the hub */
-  const apps = social.map((s) => ({
-    id: s.name,
-    name: s.name,
-    href: s.href,
-    icon: <Icon name={s.name} className="h-5 w-5" />,
-  }));
+  /* every profile link (same ones as About, plus Codeforces and LeetCode) is a tile on the hub,
+     in that site's own primary colour (GitHub and X follow the text colour so they stay visible at night) */
+  const COLOR = {
+    GitHub: "rgb(var(--ink))",
+    LinkedIn: "#0A66C2",
+    Codeforces: "#1F8ACB",
+    LeetCode: "#FFA116",
+    X: "rgb(var(--ink))",
+    Instagram: "#E4405F",
+    Facebook: "#1877F2",
+    Messenger: "#0A7CFF",
+    WhatsApp: "#25D366",
+  };
+  /* gradient brand backgrounds (pill under the hub) */
+  const BG = {
+    Instagram: "linear-gradient(45deg, #f58529, #dd2a7b 45%, #8134af 75%, #515bd4)",
+    Messenger: "linear-gradient(135deg, #00b2ff 0%, #006aff 40%, #a033ff 75%, #ff5280 100%)",
+  };
+  const apps = useMemo(
+    () =>
+      social.map((s) => ({
+        id: s.name,
+        name: s.name,
+        href: s.href,
+        color: COLOR[s.name],
+        bg: BG[s.name],
+        icon: <Icon name={s.name} className="h-6 w-6" />,
+      })),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [social],
+  );
   const quick = social
     .filter((s) => s.name === "WhatsApp" || s.name === "LinkedIn")
     .sort((a) => (a.name === "WhatsApp" ? -1 : 1));
@@ -407,7 +431,7 @@ export default function Contact() {
       <div className="grid grid-cols-1 gap-6 lg:grid-cols-[.85fr_1.15fr] *:min-w-0">
         <Reveal x={-30} y={0} className="h-full">
           <div className="card flex h-full flex-col p-3">
-            <div className="flex-1 rounded-[1.4rem] bg-linear-to-b from-surface to-mist/70 px-6 pb-6 pt-8 text-center">
+            <div className="flex-1 rounded-[1.4rem] bg-linear-to-b from-surface to-mist/70 px-3 pb-6 pt-3 text-center">
               <IntegrationHub
                 apps={apps}
                 label="Find me online"
@@ -417,11 +441,12 @@ export default function Contact() {
                   <img
                     src="/profile.webp"
                     alt=""
-                    className="h-full w-full object-cover"
+                    decoding="async"
+                    className="h-full w-full object-cover object-[50%_20%] scale-[1.0]"
                   />
                 }
               />
-              <h3 className="mt-4 text-2xl font-extrabold">
+              <h3 className="mt-5 text-2xl font-extrabold">
                 Let's build something that flows
               </h3>
               <p className="mt-1 text-ink/55">
