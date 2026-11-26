@@ -226,7 +226,7 @@ export default function App() {
                   aria-hidden
                   className="flex items-center gap-3 text-xs font-semibold uppercase tracking-[0.28em] text-ink/55 sm:text-sm"
                 >
-                  <span className="h-px w-8 bg-gradient-to-r from-amber-400 to-rose-500 sm:w-12" />
+                  <span className="h-px w-8 bg-linear-to-r from-amber-400 to-rose-500 sm:w-12" />
                   Hello
                 </span>
                 <span
