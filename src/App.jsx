@@ -2,6 +2,7 @@ import { Suspense, lazy, useEffect, useMemo } from "react";
 import { images } from "./gallery";
 import { site } from "./site";
 import ThemeToggle from "./components/ThemeToggle";
+import Starfield from "./components/Starfield";
 import ScrollProgress from "./components/ScrollProgress";
 import InstallButton from "./components/InstallButton";
 import { TopNav, BottomNav } from "./components/NavMenu";
@@ -168,6 +169,8 @@ export default function App() {
   return (
     <div id="top" className="fixed inset-0">
       {chrome}
+      {/* night-only starry sky behind the photo tunnel (hidden in day mode) */}
+      <Starfield />
       {tunnel.length === 0 ? (
         <div className="grid h-full place-items-center px-6">
           <p className="max-w-md rounded-2xl border border-dashed border-ink/25 p-10 text-center text-ink/60">
