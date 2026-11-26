@@ -252,7 +252,11 @@ export default function App() {
                   />
                 </span>
               </h1>
-              <ul className="mt-4 flex max-w-md flex-wrap gap-2 text-xs font-semibold sm:text-sm">
+
+              {/* tagline commented out because it was already included in the
+              backspace text component above */}
+
+              {/* <ul className="mt-4 flex max-w-md flex-wrap gap-2 text-xs font-semibold sm:text-sm">
                 {site.tagline.split("·").map((t) => (
                   <li
                     key={t}
@@ -261,7 +265,7 @@ export default function App() {
                     {t.trim()}
                   </li>
                 ))}
-              </ul>
+              </ul> */}
             </div>
             <p className="pointer-events-none absolute bottom-10 right-10 hidden text-sm text-ink/55 lg:block">
               Scroll · drag · hover

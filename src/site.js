@@ -4,7 +4,7 @@ export const site = {
   name: "Hafiz Sakib",
   full: "Mohammad Hafizur Rahman Sakib",
   tagline:
-    "Full-stack developer · Competitive programmer · NLP researcher · Open-source enthusiast · Exploring Linux",
+    "Full-stack developer · Competitive programmer · NLP researcher · Exploring Linux",
   place: "Chattogram, Bangladesh",
   bio: "CSE graduate from Premier University who builds full-stack web apps with clean UI and solid architecture.",
   email: "hafizsakib5@gmail.com",
