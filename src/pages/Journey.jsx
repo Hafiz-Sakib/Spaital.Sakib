@@ -174,7 +174,7 @@ const SECTIONS = [
   },
   {
     id: "pub",
-    label: "Journals & Publications",
+    label: "Publications & Journals",
     icon: FaFileLines,
     body: () => <Pubs />,
   },
