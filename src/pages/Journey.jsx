@@ -217,7 +217,7 @@ export default function Journey() {
               </h2>
               <div
                 data-glow
-                className="rounded-[2rem] bg-surface p-5 shadow-[0_12px_40px_-12px_rgba(20,21,26,.12)] sm:p-8"
+                className="rounded-4xl bg-surface p-5 shadow-[0_12px_40px_-12px_rgba(20,21,26,.12)] sm:p-8"
               >
                 {body()}
               </div>
