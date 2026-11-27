@@ -1,6 +1,11 @@
 import { useRef } from "react";
 import { motion, useReducedMotion, useScroll, useSpring } from "framer-motion";
-import { FaAward, FaBriefcase, FaFileLines, FaGraduationCap } from "react-icons/fa6";
+import {
+  FaAward,
+  FaBriefcase,
+  FaFileLines,
+  FaGraduationCap,
+} from "react-icons/fa6";
 import { LuAward, LuCheck } from "react-icons/lu";
 import { SiCoursera, SiHackerrank, SiUdemy } from "react-icons/si";
 import { certs, edu, jobs, pubs } from "../about";
@@ -161,10 +166,30 @@ function Pubs() {
 }
 
 const SECTIONS = [
-  { id: "edu", label: "Education", icon: FaGraduationCap, body: () => <Steps items={edu} /> },
-  { id: "pub", label: "Journal & Publication", icon: FaFileLines, body: () => <Pubs /> },
-  { id: "cert", label: "Certificates & Courses", icon: FaAward, body: () => <Certs /> },
-  { id: "exp", label: "Experience", icon: FaBriefcase, body: () => <Steps items={jobs} /> },
+  {
+    id: "edu",
+    label: "Education",
+    icon: FaGraduationCap,
+    body: () => <Steps items={edu} />,
+  },
+  {
+    id: "pub",
+    label: "Journals & Publications",
+    icon: FaFileLines,
+    body: () => <Pubs />,
+  },
+  {
+    id: "cert",
+    label: "Certificates & Courses",
+    icon: FaAward,
+    body: () => <Certs />,
+  },
+  {
+    id: "exp",
+    label: "Experience",
+    icon: FaBriefcase,
+    body: () => <Steps items={jobs} />,
+  },
 ];
 
 /* All four sections one after another (no tabs), each one fully expanded. */
@@ -190,7 +215,10 @@ export default function Journey() {
                 <Icon aria-hidden className="h-5 w-5 text-ink/60" />
                 {label}
               </h2>
-              <div data-glow className="rounded-[2rem] bg-surface p-5 shadow-[0_12px_40px_-12px_rgba(20,21,26,.12)] sm:p-8">
+              <div
+                data-glow
+                className="rounded-[2rem] bg-surface p-5 shadow-[0_12px_40px_-12px_rgba(20,21,26,.12)] sm:p-8"
+              >
                 {body()}
               </div>
             </Reveal>
